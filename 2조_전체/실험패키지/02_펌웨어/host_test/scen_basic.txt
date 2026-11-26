@@ -1,0 +1,14 @@
+set T 20
+cmd t
+cmd l R200
+set R 200
+set clip sine
+cmd s
+set clip sq
+cmd q
+cmd l R206
+set R 206
+cmd q
+set clip sine
+cmd s
+lcd

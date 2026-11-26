@@ -1,0 +1,33 @@
+# 기준 없이 온도 없으면 ref 거부
+cmd ref s
+# 온도 22 °C, 페이스트 R20=200 (실제 R = 200/(1+0.02*2) = 192.3)
+set T 22
+cmd t
+cmd w
+set clip sine
+cmd l REF050
+cmd ref s
+cmd sig 2.0
+# 같은 배합(R20=200) → NORMAL 기대
+cmd l W050-B2
+cmd s
+# 물 +3% 가정 R20=206 → |z|=3 근처 → ABNORMAL 기대 (6/2=3)
+set R 206
+cmd l W053-B1
+cmd s
+# 온도가 25 °C로 올라도 Z20은 같아야 함
+set T 25
+cmd t
+cmd s
+lcd
+# 버튼: 짧게(측정) / 길게(기준)
+set R 200
+press 200
+lcd
+press 2000
+lcd
+# 재부팅 후 설정 유지
+reboot
+cmd info
+wait 120000
+cmd s

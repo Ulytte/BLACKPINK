@@ -1,0 +1,6 @@
+02_펌웨어/host_test/wc_host
+02_펌웨어/avr_test/harness
+02_펌웨어/avr_test/*.elf
+03_PC/data/
+03_PC/test/data/
+__pycache__/

@@ -1,0 +1,9 @@
+{
+ "configuration": "EXP-Rev5",
+ "nets": 18,
+ "parts": 19,
+ "board_jumpers": 22,
+ "external_leads": 21,
+ "errors": [],
+ "scope": "연결(토폴로지)만 검사. 전기적 동작은 spice_from_wiring.py로 확인."
+}
