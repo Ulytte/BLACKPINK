@@ -1,0 +1,18 @@
+[
+  {
+    "configuration": "4S",
+    "nets": 14,
+    "board_jumpers": 21,
+    "external_leads": 14,
+    "errors": [],
+    "scope": "Connectivity only; no bench test."
+  },
+  {
+    "configuration": "6S",
+    "nets": 13,
+    "board_jumpers": 19,
+    "external_leads": 13,
+    "errors": [],
+    "scope": "Connectivity only; no bench test."
+  }
+]

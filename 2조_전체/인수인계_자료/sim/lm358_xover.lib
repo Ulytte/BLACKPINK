@@ -1,0 +1,9 @@
+* LM358 behavioral model + crossover (class-B output stage), design checks only (추정 모델)
+* sink: 50 uA class-A pull-down; larger sink needs internal node ~0.6 V below output -> slew-limited dead zone
+.subckt LM358 inp inn vcc vee out
+Bgm 0 n1 I = 0.5m*tanh((V(inp)-V(inn))*6.283m/0.5m)
+C1 n1 0 1n
+R1 n1 0 16meg
+Blim n2 0 V = min(max(V(n1), V(vee)+0.02), V(vcc)-1.5)
+Bout out 0 I = -min(0.01*ln(1+exp((V(n2)-V(out))/0.01))/20,30m) + 50u + min(0.01*ln(1+exp((V(out)-V(n2)-0.6)/0.01))/20,30m)
+.ends

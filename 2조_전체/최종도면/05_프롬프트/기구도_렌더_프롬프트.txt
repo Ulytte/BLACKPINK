@@ -1,0 +1,80 @@
+[사용법]
+- 아래 영어 프롬프트 중 해당 구성을 골라 이미지 생성 도구에 그대로 붙여 넣어.
+- 각 도면의 "Assembled mechanical view" 사진을 바꾸는 용도야.
+- 그림은 모양을 보여 주는 참고용이고, 치수는 도면 표에 적힌 값이 기준이야.
+- 공통 규칙: 흰 배경, 3/4 위에서 내려다본 시점, 글자·로고 없음, 온도센서는 측정 중에는 용기에 넣지 않음(그림에 넣지 않기).
+
+============================================================
+구성 1 · S1 자 프로브 · 4전극 + AC  (접촉식, 4개 전극 모두 연결)
+============================================================
+Clean technical product render on a plain white background, three-quarter top-down view, soft studio lighting, no text, no logos.
+A short SQUARE clear PET plastic container, about 67 mm wide and only 45 mm tall (a taller container cut down), open top.
+Grey wet cement paste fills it to about 32 mm high, flat matte surface.
+A flat plastic ruler (about 25 mm wide, 2 mm thick) lies across the top rim through the middle of the container.
+Four stainless steel M4 socket-head screws hang straight down through the ruler in one straight line, evenly spaced 15 mm apart, centered in the container, the outer screws about 10 mm from the walls.
+Under the ruler each screw has a stainless hex nut. Each screw shaft is covered with black heat-shrink tubing from the nut down, except the bottom 10 mm, which is bare shiny stainless steel and fully submerged in the paste. Screw tips end about 10 mm above the container floor.
+ALL FOUR screws have a short wire with an alligator clip clipped to the screw head above the ruler (red, yellow, blue, black from left to right).
+No other metal in the container. Simple, accurate engineering assembly illustration.
+
+============================================================
+구성 2 · S1 자 프로브 · 2전극 + AC  (접촉식, 바깥 두 전극만 연결)
+============================================================
+Clean technical product render on a plain white background, three-quarter top-down view, soft studio lighting, no text, no logos.
+A short SQUARE clear PET container about 67 mm wide and 45 mm tall, grey cement paste filled to about 32 mm.
+A plastic ruler (25 mm wide, 2 mm thick) rests across the rim; four stainless M4 screws hang down through it in a straight line, 15 mm apart, each with a nut under the ruler and black heat-shrink on the shaft, bottom 10 mm bare and submerged, tips about 10 mm above the floor.
+ONLY THE TWO OUTER screws (first and fourth) have alligator clip wires attached to their heads (red on the left, black on the right). The two middle screws have NO wires.
+No other metal in the container.
+
+============================================================
+구성 3 · S1 자 프로브 · 2전극 + RC (74HC14)  (접촉식, 바깥 두 전극만 연결)
+============================================================
+Identical mechanical scene to configuration 2:
+white background, three-quarter top-down view, no text, no logos.
+A short SQUARE clear PET container about 67 mm wide and 45 mm tall, grey cement paste to about 32 mm.
+A plastic ruler (25 x 2 mm) across the rim with four stainless M4 screws hanging down in a line, 15 mm apart, nuts under the ruler, black heat-shrink on the shafts, bare 10 mm tips submerged, tips about 10 mm above the floor.
+Only the first and fourth screws have alligator clip wires (orange on the left, black on the right); the middle two have none.
+In the background, slightly out of focus, a breadboard with one black 14-pin DIP chip plugged across the center gap.
+
+============================================================
+구성 4 · S2 와셔 전극 · 2전극 + AC  (접촉식, 벽 관통 볼트)
+============================================================
+Clean technical product render on a plain white background, three-quarter top-down view, soft studio lighting, no text, no logos.
+A SQUARE clear PET plastic container, 67 mm x 67 mm, 100 mm tall, open top. Grey cement paste fills it to 50 mm (half height), flat matte surface.
+On two OPPOSITE walls, centered horizontally and 25 mm above the inside floor, one stainless electrode assembly goes through a 4.5 mm hole in each wall.
+INSIDE the container, from the bolt head toward the wall: a round M4 stainless bolt head, a small M4 flat washer, a medium M8 flat washer, a large 24 mm M12 flat washer pressed flat against the inner wall, and a thin black rubber washer between the large washer and the wall. The two large inner washers face each other across the container and are fully under the paste.
+OUTSIDE, from the wall outward: a large 24 mm stainless washer, a small M4 washer, a hex nut, a ring terminal with a wire, and a second hex nut; the bolt end sticks out about 2 cm.
+The wires from the ring terminals are red (left) and black (right).
+Show one wall as a clean cutaway (or make the paste slightly transparent near the wall) so the inner washer stack is visible. No glue. No temperature probe in the container.
+
+============================================================
+구성 5 · S2 와셔 전극 · 2전극 + RC (74HC14)  (접촉식, 벽 관통 볼트)
+============================================================
+Identical mechanical scene to configuration 4:
+white background, three-quarter top-down view, no text, no logos.
+A SQUARE clear PET container 67 x 67 x 100 mm, grey cement paste to 50 mm.
+Two opposite walls each have a stainless M4 bolt through a 4.5 mm hole, 25 mm above the inside floor, centered.
+Inside stack: bolt head, M4 washer, M8 washer, large 24 mm M12 washer flat on the inner wall, thin black rubber washer against the wall.
+Outside stack: large M12 washer, M4 washer, nut, ring terminal with wire, second nut, bolt end sticking out about 2 cm.
+Wires: orange (left) and black (right). Cutaway on one wall to show the inner stack. No glue, no probe in the container.
+In the background, slightly out of focus, a breadboard with one black 14-pin DIP chip plugged across the center gap.
+
+============================================================
+구성 6 · S3 구리테이프 · 비접촉 + AC (LM358)
+============================================================
+Clean technical product render on a plain white background, three-quarter top-down view, soft studio lighting, no text, no logos.
+A SQUARE clear PET plastic container, 67 mm x 67 mm, 100 mm tall, thin straight walls, open top.
+Grey wet cement paste fills it to exactly 50 mm (half height), flat matte surface.
+On the OUTSIDE of two OPPOSITE walls, one vertical copper foil tape strip on each wall: 20 mm wide, 40 mm tall, centered horizontally, bottom edge 5 mm above the container bottom, top edge 45 mm above the bottom (below the paste surface).
+At the upper corner of each strip, a small 5 x 10 mm copper tab is folded outward, with a short alligator clip wire (orange on the left, blue on the right) clipped to it.
+Each copper strip is covered with clear protective tape. The copper never touches the paste. No metal inside the container.
+In the background, slightly out of focus, a breadboard with one black 8-pin DIP chip plugged across the center gap.
+
+============================================================
+구성 7 · S3 구리테이프 · 비접촉 + RC (74HC14)
+============================================================
+Identical mechanical scene to configuration 6:
+white background, three-quarter top-down view, no text, no logos.
+A SQUARE clear PET container 67 x 67 x 100 mm, grey cement paste to 50 mm.
+Copper foil strips 20 mm wide x 40 mm tall on the OUTSIDE of two opposite walls, centered, from 5 mm to 45 mm above the bottom, covered with clear tape, small folded-out tabs at the top corner with alligator clip wires (orange on the left, black on the right).
+The copper never touches the paste. No metal inside the container.
+In the background, slightly out of focus, a breadboard with one black 14-pin DIP chip plugged across the center gap.

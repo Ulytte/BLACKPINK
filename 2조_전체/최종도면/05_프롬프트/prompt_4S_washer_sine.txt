@@ -1,0 +1,112 @@
+Create one engineering build sheet titled "Configuration 4S · S2 washer electrodes + AC SINE".
+Attach / reference: the previous sheet "configuration-4.png" (Rev 3.1) for style. This new sheet REPLACES the square-wave drive with a filtered sine-wave drive.
+
+STYLE AND LAYOUT (copy the attached reference sheet exactly):
+- One landscape sheet, same look as the attached "configuration-4.png / configuration-6.png": white background, dark-navy title bar, rounded panels with navy headers, Arial-like font, header right side "SINE EDITION · REV 4.0 / Dimensions in mm · not to scale".
+- Panels in this order: 1 · Assembled mechanical view | 2 · Exploded view / assembly order | 4 · Dimension view (top row), then 3 · Wiring view (wide), then Bill of Materials, then SELF-CHECK footer.
+- Wiring view contains, left to right: NET CONNECTIONS diagram (colored horizontal net lines with endpoint dots and hole labels, same style as reference), 830-hole board top view (rotated 90°, top rail pair T on the left, bottom pair B on the right, rows 1–63 top to bottom, columns a–e | f–j), PART LEGS table, EXTERNAL LEADS table, INSTALL EVERY JUMPER table.
+- On the board view the IC must be drawn as a clearly visible black DIP body across the center gap at the listed holes, with the text "LM358" on it and pin numbers, plus a red label "U1 = LM358 — install first". Every resistor/capacitor must be drawn at its two listed holes and labeled with its name and value. Electrolytic capacitors show a "+" at leg .1.
+- Wire colors: red 5V, black GND, yellow DATA, blue sense/I2C, orange drive/sine, green frequency. Color legend at the bottom.
+- Add a small inset titled "SINE SOURCE" showing a simple schematic of the block described below (PWM → R–R with C to output and C to GND → op-amp buffer → output). Keep it schematic, not a breadboard picture.
+
+STRICT RULES:
+- Use ONLY the nets, parts, values, holes and jumpers listed below. Do not move, add, merge or renumber anything. Do not invent extra parts.
+- Every hole is used at most once except rail holes; do not reuse a hole for two things.
+- Hole addresses are breadboard coordinates (a–j + row number; T+/T−/B+/B− + rail index 1–50, rail split between 25 and 26).
+- Do not write any measured result, price or performance claim. Footer must say: "Circuit operation has not been bench-tested."
+- Text in English, except Korean is allowed in captions if needed.
+
+WHAT CHANGED (show as a short note box on the sheet):
+- Drive: Arduino D3 fast PWM (≈62.5 kHz, duty following a 64-step sine table) → 2nd-order Sallen-Key low-pass filter (RA, RB = 10 kΩ; C1 = 10 nF to op-amp output; C2 = 4.7 nF to GND; fc ≈2.3 kHz) → LM358 amp A as unity buffer → ≈977 Hz sine, ≈0.5–3.0 V.
+- CS 10 µF blocks DC; R1 330 Ω is the reference resistor; Arduino A1 reads the drive side, A0 reads the electrode side.
+- E4 returns to a virtual ground ≈1.81 V made by RV1 10 kΩ / (RV2a 4.7 kΩ + RV2b 1 kΩ) with CV 10 µF, buffered by LM358 amp B. No DC flows through the paste.
+- Arduino D8 and D9 are no longer used in this configuration.
+
+MECHANICAL (S2 washer electrodes, current design):
+- Container: square clear PET container, outer 67 × 67 × 100 mm. Fill line 50 mm.
+- Two opposite walls: one Ø4.5 mm through-hole each, centered horizontally, center 25 mm above the INNER bottom. Holes face each other.
+- Stack per wall, INSIDE → OUTSIDE: SUS M4×40 bolt head → M4 flat washer → M8 flat washer → M12 flat washer (= electrode, flat on the inner wall) → [optional thin rubber washer, only if the water test leaks] → WALL → M12 flat washer (outside reinforcement) → M4 flat washer → M4 hex nut (hand-tight).
+- The bolt end sticks out ≈20 mm outside; the alligator clip is clipped to this bolt end. No glue. No ring terminal.
+- Items 1–4 (bolt head + M4 + M8 + M12 inside) are in the paste and form the electrode.
+- Leak test: fill water to 50 mm and wait one day before using cement.
+- Temperature probe: inserted only before and after each reading, removed during measurement.
+- Dimension view: 67 wide, 100 tall, fill line 50, hole center 25 above inner bottom, Ø4.5, washer-face gap "≈37, measure on site".
+
+NETS (every name on one line is electrically common; do not add or remove any endpoint):
+  5V [red (5V)]: UNO.5V, DS.red, LCD.VCC, RT.1, U1.8, RV1.1, CD.1
+  GND [black (GND)]: UNO.GND, DS.black, LCD.GND, U1.4, C2.2, RV2b.2, CV.2, CD.2
+  DATA [yellow (DATA)]: UNO.D2, DS.yellow, RT.2
+  SDA [blue (sense / I2C)]: UNO.A4, LCD.SDA
+  SCL [blue (sense / I2C)]: UNO.A5, LCD.SCL
+  PWM [orange (drive / sine)]: UNO.D3, RA.1
+  FX [orange (drive / sine)]: RA.2, RB.1, C1.1
+  FY [orange (drive / sine)]: RB.2, C2.1, U1.3
+  SINE [orange (drive / sine)]: U1.1, U1.2, C1.2, CS.1
+  VD [blue (sense / I2C)]: CS.2, R1.1, UNO.A1
+  NODE [blue (sense / I2C)]: R1.2, E1, UNO.A0
+  VG [blue (sense / I2C)]: U1.7, U1.6, E4
+  VREF [blue (sense / I2C)]: RV1.2, RV2a.1, CV.1, U1.5
+  VR2 [blue (sense / I2C)]: RV2a.2, RV2b.1
+
+PARTS (value; leg .1 hole; leg .2 hole):
+  RT: 4.7 kΩ; .1 = T+20; .2 = a26
+  RA: 10 kΩ; .1 = b17; .2 = b15
+  RB: 10 kΩ; .1 = d15; .2 = d12
+  C1: 10 nF (103); .1 = c15; .2 = c10
+  C2: 4.7 nF (472); .1 = b12; .2 = T-9
+  CS: 10 µF 50 V (+/−); .1 = c30; .2 = c32 — electrolytic: leg .1 = + (long leg), leg .2 = −
+  R1: 330 Ω 1%; .1 = a32; .2 = a34
+  RV1: 10 kΩ; .1 = T+32; .2 = a40
+  RV2a: 4.7 kΩ; .1 = b40; .2 = b42
+  RV2b: 1 kΩ; .1 = a42; .2 = T-34
+  CV: 10 µF 50 V (+/−); .1 = c40; .2 = T-32 — electrolytic: leg .1 = + (long leg), leg .2 = −
+  CD: 0.1 µF (104); .1 = j10; .2 = B-8
+
+IC U1 = LM358N DIP-8, notch toward row 1, straddling the center gap:
+  pin 1 = e10, pin 2 = e11, pin 3 = e12, pin 4 = e13, pin 5 = f13, pin 6 = f12, pin 7 = f11, pin 8 = f10
+
+DS18B20 factory leads: red = T+2, black = T-2, yellow = j47
+
+JUMPER SCHEDULE (number them exactly in this order):
+  1. T+25 → T+26  [5V, red (5V)]
+  2. T-25 → T-26  [GND, black (GND)]
+  3. B+25 → B+26  [5V, red (5V)]
+  4. B-25 → B-26  [GND, black (GND)]
+  5. T+50 → B+50  [5V, red (5V)]
+  6. T-50 → B-50  [GND, black (GND)]
+  7. i10 → B+8  [5V, red (5V)]
+  8. a13 → T-10  [GND, black (GND)]
+  9. i46 → i47  [DATA, yellow (DATA)]
+  10. h47 → b26  [DATA, yellow (DATA)]
+  11. i48 → i49  [SDA, blue (sense / I2C)]
+  12. i50 → i51  [SCL, blue (sense / I2C)]
+  13. i52 → a17  [PWM, orange (drive / sine)]
+  14. a10 → a11  [SINE, orange (drive / sine)]
+  15. b10 → b30  [SINE, orange (drive / sine)]
+  16. d32 → i58  [VD, blue (sense / I2C)]
+  17. b34 → i54  [NODE, blue (sense / I2C)]
+  18. h54 → i55  [NODE, blue (sense / I2C)]
+  19. j12 → j11  [VG, blue (sense / I2C)]
+  20. h11 → i56  [VG, blue (sense / I2C)]
+  21. d40 → i13  [VREF, blue (sense / I2C)]
+  22. Arduino 5V → T+1  [5V, red (5V)]
+  23. Arduino GND → T-1  [GND, black (GND)]
+  24. LCD VCC → T+3  [5V, red (5V)]
+  25. LCD GND → T-3  [GND, black (GND)]
+  26. Arduino D2 → j46  [DATA, yellow (DATA)]
+  27. Arduino A4 → j48  [SDA, blue (sense / I2C)]
+  28. LCD SDA → j49  [SDA, blue (sense / I2C)]
+  29. Arduino A5 → j50  [SCL, blue (sense / I2C)]
+  30. LCD SCL → j51  [SCL, blue (sense / I2C)]
+  31. Arduino D3 → j52  [PWM, orange (drive / sine)]
+  32. Electrode E1 clip → j54  [NODE, blue (sense / I2C)]
+  33. Arduino A0 → j55  [NODE, blue (sense / I2C)]
+  34. Electrode E4 clip → j56  [VG, blue (sense / I2C)]
+  35. Arduino A1 → j58  [VD, blue (sense / I2C)]
+
+Total: 21 board jumpers + 14 external / clip leads = 35 (DS18B20 factory leads not counted).
+
+BILL OF MATERIALS (one configuration):
+Arduino Uno R3 compatible ×1; 830-hole breadboard ×1; I2C LCD 16×2 ×1; waterproof DS18B20 ×1; LM358N DIP-8 ×1; RT 4.7 kΩ ×1; RA 10 kΩ ×1; RB 10 kΩ ×1; C1 10 nF ceramic (103) ×1; C2 4.7 nF ceramic (472) ×1; CS 10 µF 50 V electrolytic ×1; R1 330 Ω 1% ×1; RV1 10 kΩ ×1; RV2a 4.7 kΩ ×1; RV2b 1 kΩ ×1; CV 10 µF 50 V electrolytic ×1; CD 0.1 µF ceramic (104) ×1; alligator clip leads ×2; jumper wires ×35; PET container 67×67×100 ×1, SUS M4×40 bolt ×2, M4 nut ×2, M4 washer ×4, M8 washer ×2, M12 washer ×4, rubber washer ×2 (optional).
+
+SELF-CHECK footer text: "Net list verified by connectivity check (no splits, no shorts, no reused holes). Sine source: D3 Timer2 PWM + 2nd-order LPF + LM358. Pre-check: LM358 pin 8 = 5 V, pin 4 = 0 V, pin 7 ≈ 1.8 V; then a 100 Ω test resistor in place of the electrodes should read ≈100 Ω. Circuit operation has not been bench-tested."

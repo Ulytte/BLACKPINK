@@ -1,0 +1,99 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><style>*{box-sizing:border-box}body{margin:0;font-family:'Noto Sans CJK KR','Noto Sans KR',sans-serif;color:#17324d;background:#fff}
+.sheet{width:1900px;padding:28px 34px}header{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:5px solid #153e67;padding-bottom:10px}
+h1{font-size:34px;margin:0}header small{font-size:17px;text-align:right;color:#444}
+.alert{margin:16px 0;padding:14px 18px;border:3px solid #c0392b;background:#fdecea;border-radius:10px;font-size:20px;line-height:1.5}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.panel{border:2px solid #b9cbdc;border-radius:10px;overflow:hidden}.panel h2{background:#173f66;color:#fff;margin:0;padding:10px 16px;font-size:22px}
+.body{padding:12px 16px;font-size:18px;line-height:1.5}table{border-collapse:collapse;width:100%;font-size:16px}th{background:#e9f0f6;text-align:left}th,td{border:1px solid #d1dce6;padding:4px 8px}
+ol li{margin-bottom:6px}.ok{color:#1e7d32;font-weight:700}.full{grid-column:1/-1}code{background:#f1f3f5;padding:0 4px;border-radius:4px} h3{margin:10px 0 4px}</style><body><div class="sheet">
+<header><h1>구성 4 · S2 와셔 전극 · 2전극 + AC (칩 없음)</h1><small>Rev 3.2 · 실제 구매품 기준 수정판 · 회로 연결은 Rev 3.1과 동일(자동 검증)<br>치수 mm · 실제 비율 아님</small></header>
+<div class="alert"><b>이 구성은 칩이 필요 없어.</b> Arduino D9·D8이 직접 전극을 번갈아 구동하고, A0~A3로 전압을 읽어. 브레드보드에는 저항(RT, R1)만 꽂아.</div>
+<div class="grid">
+<div class="panel"><h2>① Arduino 핀 연결 (이 구성은 칩 없음)</h2><div class="body"><table><tr><th>Arduino 핀</th><th>넷</th><th>브레드보드 구멍</th></tr><tr><td>5V</td><td>5V</td><td>T+1</td></tr><tr><td>GND</td><td>GND</td><td>T-1</td></tr><tr><td>D2</td><td>DATA</td><td>j46</td></tr><tr><td>A4</td><td>SDA</td><td>j48</td></tr><tr><td>A5</td><td>SCL</td><td>j50</td></tr><tr><td>D9</td><td>DRIVE</td><td>j52</td></tr><tr><td>A2</td><td>DRIVE</td><td>j53</td></tr><tr><td>A0</td><td>E1</td><td>j55</td></tr><tr><td>D8</td><td>RETURN</td><td>j57</td></tr><tr><td>A1</td><td>RETURN</td><td>j58</td></tr></table></div></div>
+<div class="panel"><h2>② 회로 원리도</h2><div class="body"><svg viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg" font-family="'Noto Sans CJK KR','Noto Sans KR',sans-serif">
+<rect x="10" y="60" width="90" height="40" rx="4" fill="#fff" stroke="#17324d" stroke-width="1.5"/><text x="55.0" y="85.6" font-size="16" text-anchor="middle" font-weight="700">UNO D9</text>
+<polyline points="100,80 160,80" fill="none" stroke="#e67e22" stroke-width="2.2"/>
+<circle cx="130" cy="80" r="5" fill="#e67e22"/>
+<rect x="160" y="68" width="90" height="24" rx="4" fill="#fff" stroke="#17324d" stroke-width="1.5"/><text x="205.0" y="84.9" font-size="14" text-anchor="middle" font-weight="400">R1 330 Ω</text>
+<circle cx="275" cy="80" r="5" fill="#e67e22"/>
+<rect x="250" y="200" width="400" height="170" fill="none" stroke="#8aa" stroke-width="2"/><rect x="254" y="235" width="392" height="131" fill="#d2d2cc"/>
+<text x="450" y="390" font-size="13" fill="#555" text-anchor="middle" font-weight="400">용기 · 페이스트에 전극이 직접 닿음</text>
+<text x="130" y="55" font-size="14" fill="#1f6fb2" text-anchor="middle" font-weight="700">A2</text>
+<polyline points="130,80 130,62" fill="none" stroke="#1f6fb2" stroke-width="2.2"/>
+<text x="275" y="55" font-size="14" fill="#1f6fb2" text-anchor="middle" font-weight="700">A0</text>
+<polyline points="275,80 275,62" fill="none" stroke="#1f6fb2" stroke-width="2.2"/>
+<rect x="254" y="250" width="10" height="80" fill="#9aa3ab" stroke="#555"/><rect x="636" y="250" width="10" height="80" fill="#9aa3ab" stroke="#555"/>
+<text x="270" y="245" font-size="13" fill="#333" text-anchor="start" font-weight="700">E1 와셔</text>
+<text x="630" y="245" font-size="13" fill="#333" text-anchor="end" font-weight="700">E4 와셔</text>
+<polyline points="250,80 290,80 290,180 259,180 259,250" fill="none" stroke="#e67e22" stroke-width="2.2"/>
+<polyline points="641,250 641,110 700,110" fill="none" stroke="#e67e22" stroke-width="2.2"/>
+<circle cx="670" cy="110" r="5" fill="#e67e22"/>
+<text x="670" y="96" font-size="14" fill="#1f6fb2" text-anchor="middle" font-weight="700">A1</text>
+<rect x="700" y="90" width="90" height="40" rx="4" fill="#fff" stroke="#17324d" stroke-width="1.5"/><text x="745.0" y="115.6" font-size="16" text-anchor="middle" font-weight="700">UNO D8</text>
+<text x="60" y="420" font-size="15" fill="#333" text-anchor="start" font-weight="400">D9 → R1 → E1 → 페이스트 → E4 → D8</text>
+<text x="60" y="445" font-size="14" fill="#e67e22" text-anchor="start" font-weight="400">D9·D8은 번갈아 HIGH/LOW (극성 반전) → 평균 직류 0</text>
+</svg></div></div>
+<div class="panel full"><h2>③ 센서(S2) 기구 · 치수</h2><div class="body" style="display:flex;justify-content:center"><div style="width:1150px"><svg viewBox="0 0 900 440" xmlns="http://www.w3.org/2000/svg" font-family="'Noto Sans CJK KR','Noto Sans KR',sans-serif">
+<rect x="42" y="205.0" width="217.1" height="163.0" fill="#d2d2cc"/>
+<rect x="40" y="40" width="221.1" height="330.0" fill="none" stroke="#8aa" stroke-width="2"/>
+<line x1="40" y1="205.0" x2="261.1" y2="205.0" stroke="#1D9E75" stroke-dasharray="6 4" stroke-width="2"/>
+<circle cx="150.55" cy="287.5" r="39.599999999999994" fill="#b9c0c6" stroke="#555"/><circle cx="150.55" cy="287.5" r="7.425" fill="#fff" stroke="#555"/>
+<text x="271.1" y="210.0" font-size="13" fill="#1D7A5B" text-anchor="start" font-weight="400">충전선 50</text>
+<text x="271.1" y="292.5" font-size="13" fill="#17324d" text-anchor="start" font-weight="400">구멍 중심 25 (Ø4.5)</text>
+<text x="271.1" y="52" font-size="13" fill="#17324d" text-anchor="start" font-weight="400">높이 100</text>
+<text x="150.55" y="392.0" font-size="13" fill="#555" text-anchor="middle" font-weight="400">벽 정면 · 폭 67 · 구멍은 폭 중앙</text>
+<rect x="400" y="209" width="300" height="12" fill="none" stroke="#333"/>
+<rect x="400" y="197.5" width="22" height="35" fill="#888" stroke="#444"/>
+<line x1="411.0" y1="197.5" x2="411.0" y2="105" stroke="#999" stroke-dasharray="3 3"/>
+<circle cx="411.0" cy="95" r="10" fill="#fff" stroke="#555"/><text x="411.0" y="100" font-size="12" fill="#333" text-anchor="middle" font-weight="700">1</text>
+<text x="715" y="70" font-size="14" fill="#333" text-anchor="start" font-weight="400">1. 볼트 머리 M4×40</text>
+<rect x="434" y="192.5" width="8" height="45" fill="#b9c0c6" stroke="#444"/>
+<line x1="438.0" y1="237.5" x2="438.0" y2="325" stroke="#999" stroke-dasharray="3 3"/>
+<circle cx="438.0" cy="335" r="10" fill="#fff" stroke="#555"/><text x="438.0" y="340" font-size="12" fill="#333" text-anchor="middle" font-weight="700">2</text>
+<text x="715" y="94" font-size="14" fill="#333" text-anchor="start" font-weight="400">2. M4 와셔</text>
+<rect x="454" y="175.0" width="10" height="80" fill="#b9c0c6" stroke="#444"/>
+<line x1="459.0" y1="175.0" x2="459.0" y2="105" stroke="#999" stroke-dasharray="3 3"/>
+<circle cx="459.0" cy="95" r="10" fill="#fff" stroke="#555"/><text x="459.0" y="100" font-size="12" fill="#333" text-anchor="middle" font-weight="700">3</text>
+<text x="715" y="118" font-size="14" fill="#333" text-anchor="start" font-weight="400">3. M8 와셔</text>
+<rect x="476" y="155.0" width="12" height="120" fill="#7fb8a8" stroke="#444"/>
+<line x1="482.0" y1="275.0" x2="482.0" y2="325" stroke="#999" stroke-dasharray="3 3"/>
+<circle cx="482.0" cy="335" r="10" fill="#fff" stroke="#555"/><text x="482.0" y="340" font-size="12" fill="#333" text-anchor="middle" font-weight="700">4</text>
+<text x="715" y="142" font-size="14" fill="#333" text-anchor="start" font-weight="400">4. M12 와셔 = 전극</text>
+<rect x="500" y="170.0" width="10" height="90" fill="#e07b5a" stroke="#444"/>
+<line x1="505.0" y1="170.0" x2="505.0" y2="105" stroke="#999" stroke-dasharray="3 3"/>
+<circle cx="505.0" cy="95" r="10" fill="#fff" stroke="#555"/><text x="505.0" y="100" font-size="12" fill="#333" text-anchor="middle" font-weight="700">5</text>
+<text x="715" y="166" font-size="14" fill="#333" text-anchor="start" font-weight="400">5. 고무 와셔</text>
+<rect x="522" y="140.0" width="8" height="150" fill="#c8c2e8" stroke="#444"/>
+<line x1="526.0" y1="290.0" x2="526.0" y2="325" stroke="#999" stroke-dasharray="3 3"/>
+<circle cx="526.0" cy="335" r="10" fill="#fff" stroke="#555"/><text x="526.0" y="340" font-size="12" fill="#333" text-anchor="middle" font-weight="700">6</text>
+<text x="715" y="190" font-size="14" fill="#333" text-anchor="start" font-weight="400">6. 용기 벽 (Ø4.5 구멍)</text>
+<rect x="542" y="155.0" width="12" height="120" fill="#b9c0c6" stroke="#444"/>
+<line x1="548.0" y1="155.0" x2="548.0" y2="105" stroke="#999" stroke-dasharray="3 3"/>
+<circle cx="548.0" cy="95" r="10" fill="#fff" stroke="#555"/><text x="548.0" y="100" font-size="12" fill="#333" text-anchor="middle" font-weight="700">7</text>
+<text x="715" y="214" font-size="14" fill="#333" text-anchor="start" font-weight="400">7. M12 와셔 (보강)</text>
+<rect x="566" y="192.5" width="8" height="45" fill="#b9c0c6" stroke="#444"/>
+<line x1="570.0" y1="237.5" x2="570.0" y2="325" stroke="#999" stroke-dasharray="3 3"/>
+<circle cx="570.0" cy="335" r="10" fill="#fff" stroke="#555"/><text x="570.0" y="340" font-size="12" fill="#333" text-anchor="middle" font-weight="700">8</text>
+<text x="715" y="238" font-size="14" fill="#333" text-anchor="start" font-weight="400">8. M4 와셔</text>
+<rect x="586" y="197.5" width="18" height="35" fill="#888" stroke="#444"/>
+<line x1="595.0" y1="197.5" x2="595.0" y2="105" stroke="#999" stroke-dasharray="3 3"/>
+<circle cx="595.0" cy="95" r="10" fill="#fff" stroke="#555"/><text x="595.0" y="100" font-size="12" fill="#333" text-anchor="middle" font-weight="700">9</text>
+<text x="715" y="262" font-size="14" fill="#333" text-anchor="start" font-weight="400">9. 너트 1 (살짝)</text>
+<rect x="616" y="192.5" width="6" height="45" fill="#7fb8a8" stroke="#444"/>
+<line x1="619.0" y1="237.5" x2="619.0" y2="325" stroke="#999" stroke-dasharray="3 3"/>
+<circle cx="619.0" cy="335" r="10" fill="#fff" stroke="#555"/><text x="619.0" y="340" font-size="12" fill="#333" text-anchor="middle" font-weight="700">10</text>
+<text x="715" y="286" font-size="14" fill="#333" text-anchor="start" font-weight="400">10. 링 단자 → 전선</text>
+<rect x="634" y="197.5" width="18" height="35" fill="#888" stroke="#444"/>
+<line x1="643.0" y1="197.5" x2="643.0" y2="105" stroke="#999" stroke-dasharray="3 3"/>
+<circle cx="643.0" cy="95" r="10" fill="#fff" stroke="#555"/><text x="643.0" y="100" font-size="12" fill="#333" text-anchor="middle" font-weight="700">11</text>
+<text x="715" y="310" font-size="14" fill="#333" text-anchor="start" font-weight="400">11. 너트 2 (꽉)</text>
+<text x="400" y="380" font-size="13" fill="#555" text-anchor="start" font-weight="400">왼쪽 = 용기 안 (페이스트) · 오른쪽 = 용기 밖</text>
+<text x="400" y="400" font-size="13" fill="#555" text-anchor="start" font-weight="400">두께는 과장, 지름만 비율 · 1~4번이 페이스트에 닿는 전극</text>
+</svg></div></div></div>
+<div class="panel"><h2>④ 만드는 순서</h2><div class="body"><h3>센서</h3><ol><li>PET 사각 용기(67 × 67 × 100)의 마주 보는 두 벽, <b>폭 중앙 · 안쪽 바닥에서 25 mm</b>에 <b>Ø4.5 구멍</b>을 뚫어 (작게 열로 뚫고 넓히기, 테두리 다듬기).</li><li>안쪽에서 볼트에 차례로: <b>볼트 머리 → M4 → M8 → M12(전극) → 고무 와셔</b>, 그 볼트를 벽 구멍으로 밀어 넣기.</li><li>바깥쪽에서: <b>M12 → M4 → 너트1</b>(손으로 살짝, 고무가 살짝 눌릴 정도) <b>→ 링 단자 → 너트2</b>(꽉).</li><li>반대쪽 벽도 똑같이. 양쪽 와셔 면이 마주 보게 (±2~3 mm는 괜찮음).</li><li><b>물을 50 mm까지 채우고 하루</b> 두어 새는지 확인. 새면 고무 와셔 다시 맞추기.</li><li>충전선 50 mm를 바깥에 네임펜으로 표시.</li></ol>
+<h3>회로</h3><ol><li>전원 레일 점퍼(표 1~6번)와 칩·부품 전원 점퍼를 꽂기.</li><li>부품 표대로 저항·커패시터 꽂기. 다리 두 개가 같은 행이면 합선.</li><li>나머지 신호 점퍼를 표 순서대로.</li><li>Arduino·LCD·DS18B20·집게선 연결. 집게선은 짧게, 테이프로 고정.</li><li><b>USB 연결 전에</b> 5 V·GND 레일을 한 번 더 확인.</li></ol>
+<h3>전원 켠 뒤 확인 (멀티미터 검은 리드 = GND)</h3><ul><li>전원 켠 뒤 측정 안 할 때: D9·D8 모두 LOW → A0~A3 모두 약 0 V</li><li>집게선을 전극 대신 <b>100 Ω 저항</b> 양 끝(E1·E4)에 물리고 측정 → 계산값이 약 100 Ω이면 회로·코드 정상</li><li>그다음 소금물 2~3가지 농도: 소금이 많을수록 저항이 단조롭게 감소하는지</li></ul></div></div>
+<div class="panel"><h2>⑤ 부품 위치 (구멍 번호)</h2><div class="body"><b>저항·커패시터</b><table><tr><th>부품</th><th>값</th><th>다리 1</th><th>다리 2</th></tr><tr><td>RT</td><td>4.7 kΩ</td><td>T+20</td><td>a26</td></tr><tr><td>R1</td><td>330 Ω 1%</td><td>a27</td><td>a28</td></tr></table><br><b>부품 목록 (BOM)</b><table><tr><th>No.</th><th>부품</th><th>수량</th></tr><tr><td>1</td><td>Arduino Uno (R3 호환)</td><td>1</td></tr><tr><td>2</td><td>브레드보드 830홀</td><td>1</td></tr><tr><td>3</td><td>I2C LCD 16×2</td><td>1</td></tr><tr><td>4</td><td>방수 온도센서 DS18B20</td><td>1</td></tr><tr><td>5</td><td>PET 사각 용기 67 × 67 × 100</td><td>1</td></tr><tr><td>6</td><td>SUS M4 × 40 볼트</td><td>2</td></tr><tr><td>7</td><td>SUS M4 너트</td><td>4</td></tr><tr><td>8</td><td>M4 와셔</td><td>4</td></tr><tr><td>9</td><td>M8 와셔</td><td>2</td></tr><tr><td>10</td><td>M12 와셔 (안쪽 전극 2 + 바깥 보강 2)</td><td>4</td></tr><tr><td>11</td><td>고무 와셔 (안지름 4~5, 바깥 ≤ M12 와셔)</td><td>2</td></tr><tr><td>12</td><td>M4 링 단자</td><td>2</td></tr><tr><td>13</td><td>RT 4.7 kΩ</td><td>1</td></tr><tr><td>14</td><td>R1 330 Ω 1%</td><td>1</td></tr><tr><td>15</td><td>집게선 ≤15 cm</td><td>2</td></tr><tr><td>16</td><td>점퍼선 (16 보드 + 16 외부·집게)</td><td>32</td></tr></table></div></div>
+<div class="panel full"><h2>⑥ 점퍼·외부선 전체 목록 (Rev 3.1과 동일)</h2><div class="body" style="columns:3;column-gap:24px"><table><tr><th>No.</th><th>시작</th><th>끝</th><th>넷</th></tr><tr><td>1</td><td>T+25</td><td>T+26</td><td>5V</td></tr><tr><td>2</td><td>T-25</td><td>T-26</td><td>GND</td></tr><tr><td>3</td><td>B+25</td><td>B+26</td><td>5V</td></tr><tr><td>4</td><td>B-25</td><td>B-26</td><td>GND</td></tr><tr><td>5</td><td>T+50</td><td>B+50</td><td>5V</td></tr><tr><td>6</td><td>T-50</td><td>B-50</td><td>GND</td></tr><tr><td>7</td><td>i46</td><td>i47</td><td>DATA</td></tr><tr><td>8</td><td>h47</td><td>b26</td><td>DATA</td></tr><tr><td>9</td><td>i48</td><td>i49</td><td>SDA</td></tr><tr><td>10</td><td>i50</td><td>i51</td><td>SCL</td></tr><tr><td>11</td><td>i52</td><td>b27</td><td>DRIVE</td></tr><tr><td>12</td><td>c27</td><td>i53</td><td>DRIVE</td></tr><tr><td>13</td><td>b28</td><td>i54</td><td>E1</td></tr><tr><td>14</td><td>h54</td><td>i55</td><td>E1</td></tr><tr><td>15</td><td>i56</td><td>i57</td><td>RETURN</td></tr><tr><td>16</td><td>h57</td><td>i58</td><td>RETURN</td></tr><tr><td>17</td><td>UNO.5V</td><td>T+1</td><td>5V</td></tr><tr><td>18</td><td>UNO.GND</td><td>T-1</td><td>GND</td></tr><tr><td>19</td><td>LCD.VCC</td><td>T+3</td><td>5V</td></tr><tr><td>20</td><td>LCD.GND</td><td>T-3</td><td>GND</td></tr><tr><td>21</td><td>UNO.D2</td><td>j46</td><td>DATA</td></tr><tr><td>22</td><td>UNO.A4</td><td>j48</td><td>SDA</td></tr><tr><td>23</td><td>LCD.SDA</td><td>j49</td><td>SDA</td></tr><tr><td>24</td><td>UNO.A5</td><td>j50</td><td>SCL</td></tr><tr><td>25</td><td>LCD.SCL</td><td>j51</td><td>SCL</td></tr><tr><td>26</td><td>UNO.D9</td><td>j52</td><td>DRIVE</td></tr><tr><td>27</td><td>UNO.A2</td><td>j53</td><td>DRIVE</td></tr><tr><td>28</td><td>E1</td><td>j54</td><td>E1</td></tr><tr><td>29</td><td>UNO.A0</td><td>j55</td><td>E1</td></tr><tr><td>30</td><td>E4</td><td>j56</td><td>RETURN</td></tr><tr><td>31</td><td>UNO.D8</td><td>j57</td><td>RETURN</td></tr><tr><td>32</td><td>UNO.A1</td><td>j58</td><td>RETURN</td></tr></table></div></div>
+<div class="panel full"><h2>⑦ Rev 3.1 대비 수정 사항</h2><div class="body"><ul><li>볼트: M4 × 12 (벽에 나사산 내기) → <b>M4 × 40 SUS 관통 볼트</b>. 구멍 Ø3.5 → <b>Ø4.5</b>.</li><li>구멍 높이: 안쪽 바닥에서 16 mm → <b>25 mm</b>. 충전: ≥35 mm → <b>50 mm</b>.</li><li>밀봉: 글루건 → <b>고무 와셔</b> (M12 전극 와셔와 벽 사이) + 바깥쪽 M12 보강 와셔.</li><li>전선: 바깥 나사 머리에 집게 → <b>너트1과 너트2 사이 링 단자</b>.</li><li>용기: 안쪽 폭 40~50 PP → <b>PET 사각 67 × 67 × 100</b>. M12 와셔 지름은 구매품 실측(도면은 27, 일반 규격 약 24).</li><li>온도센서: 측정 중 잠김 → <b>측정 직전·직후에만</b>.</li><li>회로·구멍 번호·점퍼: Rev 3.1과 동일 (자동 연결 검증 통과).</li></ul></div></div>
+</div></div></body></html>

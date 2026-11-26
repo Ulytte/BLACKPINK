@@ -1,0 +1,105 @@
+Create one engineering build sheet titled "Configuration 6S · S3 Non-contact (copper tape) + AC charge amplifier, SINE drive".
+Attach / reference: the previous sheet "configuration-6.png" (Rev 3.1) for style. This new sheet keeps the charge amplifier and REPLACES the square-wave drive with a filtered sine-wave drive made from the previously unused LM358 amp B.
+
+STYLE AND LAYOUT (copy the attached reference sheet exactly):
+- One landscape sheet, same look as the attached "configuration-4.png / configuration-6.png": white background, dark-navy title bar, rounded panels with navy headers, Arial-like font, header right side "SINE EDITION · REV 4.0 / Dimensions in mm · not to scale".
+- Panels in this order: 1 · Assembled mechanical view | 2 · Exploded view / assembly order | 4 · Dimension view (top row), then 3 · Wiring view (wide), then Bill of Materials, then SELF-CHECK footer.
+- Wiring view contains, left to right: NET CONNECTIONS diagram (colored horizontal net lines with endpoint dots and hole labels, same style as reference), 830-hole board top view (rotated 90°, top rail pair T on the left, bottom pair B on the right, rows 1–63 top to bottom, columns a–e | f–j), PART LEGS table, EXTERNAL LEADS table, INSTALL EVERY JUMPER table.
+- On the board view the IC must be drawn as a clearly visible black DIP body across the center gap at the listed holes, with the text "LM358" on it and pin numbers, plus a red label "U1 = LM358 — install first". Every resistor/capacitor must be drawn at its two listed holes and labeled with its name and value. Electrolytic capacitors show a "+" at leg .1.
+- Wire colors: red 5V, black GND, yellow DATA, blue sense/I2C, orange drive/sine, green frequency. Color legend at the bottom.
+- Add a small inset titled "SINE SOURCE" showing a simple schematic of the block described below (PWM → R–R with C to output and C to GND → op-amp buffer → output). Keep it schematic, not a breadboard picture.
+
+STRICT RULES:
+- Use ONLY the nets, parts, values, holes and jumpers listed below. Do not move, add, merge or renumber anything. Do not invent extra parts.
+- Every hole is used at most once except rail holes; do not reuse a hole for two things.
+- Hole addresses are breadboard coordinates (a–j + row number; T+/T−/B+/B− + rail index 1–50, rail split between 25 and 26).
+- Do not write any measured result, price or performance claim. Footer must say: "Circuit operation has not been bench-tested."
+- Text in English, except Korean is allowed in captions if needed.
+
+WHAT CHANGED vs Rev 3.1 configuration 6 (show as a short note box):
+- Arduino D9 now outputs fast PWM (Timer1, ≈62.5 kHz) whose duty follows a sine table.
+- LM358 amp B (pins 5, 6, 7) is no longer an unused buffer on BIAS: it is a 2nd-order Sallen-Key low-pass filter (RA, RB = 10 kΩ; C1 = 10 nF from the filter node to pin 7; C2 = 4.7 nF from pin 5 to GND). Pin 6 stays tied to pin 7. Output pin 7 drives R1 1 kΩ → Electrode A with a ≈977 Hz sine.
+- BIAS now goes only to pin 3 (jumper a12 → b34); pin 5 is the filter input.
+- Removed Rev 3.1 jumpers: i52 → b27, a12 → j13, i13 → b34. Added: i52 → j17, h11 → b27, a12 → b34. All other holes unchanged.
+- A0 is read as AC RMS of the charge-amplifier output.
+
+MECHANICAL (S3 copper tape, real container):
+- Square clear PET container, outer 67 × 67 × 100 mm, fill line 50 mm (replaces "PP cup H45, inner bottom Ø ≥70").
+- Two copper tape strips 20 mm wide × 40 mm tall on the OUTSIDE of two opposite walls, centered horizontally, from 5 mm to 45 mm above the bottom; a 5 × 10 mm tab at the top corner folded outward for the clip; covered with clear tape. The sample never touches copper.
+- Temperature probe removed during measurement.
+- Dimension view: 67 × 100 container, fill 50, copper 20 × 40, bottom gap 5, top of copper 45.
+
+NETS (every name on one line is electrically common; do not add or remove any endpoint):
+  5V [red (5V)]: UNO.5V, DS.red, LCD.VCC, RT.1, U1.8, RB1.1, CD.1
+  GND [black (GND)]: UNO.GND, DS.black, LCD.GND, U1.4, RB2.2, CB.2, CD.2, C2.2
+  DATA [yellow (DATA)]: UNO.D2, DS.yellow, RT.2
+  SDA [blue (sense / I2C)]: UNO.A4, LCD.SDA
+  SCL [blue (sense / I2C)]: UNO.A5, LCD.SCL
+  DRIVE [orange (drive / sine)]: UNO.D9, RA.1
+  A [orange (drive / sine)]: R1.2, Electrode A
+  SUM [blue (sense / I2C)]: Electrode B, U1.2, RF.2, CF.2
+  OUT [blue (sense / I2C)]: U1.1, UNO.A0, RF.1, CF.1
+  BIAS [blue (sense / I2C)]: U1.3, RB1.2, RB2.1, CB.1
+  AMP B [orange (drive / sine)]: U1.6, U1.7, C1.2, R1.1
+  FX [orange (drive / sine)]: RA.2, RB.1, C1.1
+  FY [orange (drive / sine)]: RB.2, C2.1, U1.5
+
+PARTS (value; leg .1 hole; leg .2 hole):
+  RT: 4.7 kΩ; .1 = T+20; .2 = a26
+  R1: 1 kΩ; .1 = a27; .2 = a28
+  RF: 10 MΩ; .1 = a10; .2 = a11
+  CF: 47 pF (470); .1 = b10; .2 = b11
+  RB1: 10 kΩ; .1 = T+27; .2 = a34
+  RB2: 4.7 kΩ; .1 = a35; .2 = T-28
+  CB: 10 µF (+/−); .1 = a37; .2 = T-29 — electrolytic: leg .1 = + (long leg), leg .2 = −
+  CD: 0.1 µF (104); .1 = j10; .2 = B-8
+  RA: 10 kΩ; .1 = i17; .2 = i15
+  RB: 10 kΩ; .1 = h15; .2 = h13
+  C1: 10 nF (103); .1 = g15; .2 = g11
+  C2: 4.7 nF (472); .1 = j13; .2 = B-10
+
+IC U1 = LM358N DIP-8, notch toward row 1, straddling the center gap:
+  pin 1 = e10, pin 2 = e11, pin 3 = e12, pin 4 = e13, pin 5 = f13, pin 6 = f12, pin 7 = f11, pin 8 = f10
+
+DS18B20 factory leads: red = T+2, black = T-2, yellow = j47
+
+JUMPER SCHEDULE (number them exactly in this order):
+  1. T+25 → T+26  [5V, red (5V)]
+  2. T-25 → T-26  [GND, black (GND)]
+  3. B+25 → B+26  [5V, red (5V)]
+  4. B-25 → B-26  [GND, black (GND)]
+  5. T+50 → B+50  [5V, red (5V)]
+  6. T-50 → B-50  [GND, black (GND)]
+  7. i10 → B+8  [5V, red (5V)]
+  8. a13 → T-10  [GND, black (GND)]
+  9. i46 → i47  [DATA, yellow (DATA)]
+  10. h47 → b26  [DATA, yellow (DATA)]
+  11. i48 → i49  [SDA, blue (sense / I2C)]
+  12. i50 → i51  [SCL, blue (sense / I2C)]
+  13. b28 → i53  [A, orange (drive / sine)]
+  14. c34 → b35  [BIAS, blue (sense / I2C)]
+  15. c35 → b37  [BIAS, blue (sense / I2C)]
+  16. j12 → j11  [AMP B, blue (sense / I2C)]
+  17. i52 → j17  [DRIVE, orange (drive / sine)]
+  18. h11 → b27  [AMP B, orange (drive / sine)]
+  19. a12 → b34  [BIAS, blue (sense / I2C)]
+  20. Arduino 5V → T+1  [5V, red (5V)]
+  21. Arduino GND → T-1  [GND, black (GND)]
+  22. LCD VCC → T+3  [5V, red (5V)]
+  23. LCD GND → T-3  [GND, black (GND)]
+  24. Electrode B clip → c11  [SUM, blue (sense / I2C)]
+  25. Arduino A0 → d10  [OUT, blue (sense / I2C)]
+  26. Arduino D2 → j46  [DATA, yellow (DATA)]
+  27. Arduino A4 → j48  [SDA, blue (sense / I2C)]
+  28. LCD SDA → j49  [SDA, blue (sense / I2C)]
+  29. Arduino A5 → j50  [SCL, blue (sense / I2C)]
+  30. LCD SCL → j51  [SCL, blue (sense / I2C)]
+  31. Arduino D9 → j52  [DRIVE, orange (drive / sine)]
+  32. Electrode A clip → j53  [A, orange (drive / sine)]
+
+Total: 19 board jumpers + 13 external / clip leads = 32 (DS18B20 factory leads not counted).
+
+BILL OF MATERIALS (one configuration):
+Arduino Uno R3 compatible ×1; 830-hole breadboard ×1; I2C LCD 16×2 ×1; waterproof DS18B20 ×1; PET container 67×67×100 ×1; copper tape 20 mm (20 × 40 + tab) ×2; LM358N DIP-8 ×1; RT 4.7 kΩ; R1 1 kΩ; RF 10 MΩ; CF 47 pF (470); RB1 10 kΩ; RB2 4.7 kΩ; CB 10 µF 50 V electrolytic; CD 0.1 µF (104); RA 10 kΩ; RB 10 kΩ; C1 10 nF (103); C2 4.7 nF (472) — one each; alligator clip leads ×2 (≤10 cm, taped down); jumper wires ×32.
+
+SELF-CHECK footer text: "Net list verified by connectivity check (no splits, no shorts, no reused holes). High-impedance node SUM kept short: Electrode B lead directly into c11. Pre-check: pin 8 = 5 V, pin 4 = 0 V, pin 3 ≈ 1.6 V, pin 7 ≈ 1.75 V DC. Circuit operation has not been bench-tested."

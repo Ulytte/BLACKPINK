@@ -1,0 +1,145 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><style>*{box-sizing:border-box}body{margin:0;font-family:'Noto Sans CJK KR','Noto Sans KR',sans-serif;color:#17324d;background:#fff}
+.sheet{width:1900px;padding:28px 34px}header{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:5px solid #153e67;padding-bottom:10px}
+h1{font-size:34px;margin:0}header small{font-size:17px;text-align:right;color:#444}
+.alert{margin:16px 0;padding:14px 18px;border:3px solid #c0392b;background:#fdecea;border-radius:10px;font-size:20px;line-height:1.5}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.panel{border:2px solid #b9cbdc;border-radius:10px;overflow:hidden}.panel h2{background:#173f66;color:#fff;margin:0;padding:10px 16px;font-size:22px}
+.body{padding:12px 16px;font-size:18px;line-height:1.5}table{border-collapse:collapse;width:100%;font-size:16px}th{background:#e9f0f6;text-align:left}th,td{border:1px solid #d1dce6;padding:4px 8px}
+ol li{margin-bottom:6px}.ok{color:#1e7d32;font-weight:700}.full{grid-column:1/-1}code{background:#f1f3f5;padding:0 4px;border-radius:4px} h3{margin:10px 0 4px}</style><body><div class="sheet">
+<header><h1>구성 7 · S3 구리테이프 · 비접촉 + RC — 칩: 74HC14</h1><small>Rev 3.2 · 실제 구매품 기준 수정판 · 회로 연결은 Rev 3.1과 동일(자동 검증)<br>치수 mm · 실제 비율 아님</small></header>
+<div class="alert"><b>칩(U1)이 꼭 들어가야 하는 구성이야.</b> Rev 3.1에도 있었지만 "U1"로만 적혀 있어서 빠뜨리기 쉬웠어. 칩이 없으면 아무 신호도 안 나와. 칩부터 꽂고, 반달 홈이 1행 쪽(위)을 보게 해.</div>
+<div class="grid">
+<div class="panel"><h2>① 칩 핀 연결 (가장 먼저 꽂을 것)</h2><div class="body"><svg viewBox="0 0 940 546" xmlns="http://www.w3.org/2000/svg" font-family="'Noto Sans CJK KR','Noto Sans KR',sans-serif">
+<rect x="365" y="40" width="210" height="426" rx="8" fill="#222" />
+<path d="M452 40 A18 18 0 0 0 488 40" fill="#fff"/>
+<text x="470" y="267.0" fill="#fff" font-size="24" font-weight="700" text-anchor="middle">74HC14</text>
+<text x="470" y="297.0" fill="#ddd" font-size="16" text-anchor="middle">위에서 본 모습</text>
+<text x="470" y="28" fill="#c0392b" font-size="17" text-anchor="middle">▲ 홈(notch) = 1행 쪽(위)</text>
+<circle cx="415" cy="58" r="6" fill="#fff"/>
+<rect x="343" y="62" width="22" height="16" fill="#bbb"/>
+<text x="377" y="76" fill="#fff" font-size="16" font-weight="700">1</text>
+<line x1="343" y1="70" x2="305" y2="70" stroke="#e67e22" stroke-width="3"/>
+<text x="299" y="66" font-size="17" font-weight="700" fill="#e67e22" text-anchor="end">입력 ← 전극 A, RF</text>
+<text x="299" y="87" font-size="14" fill="#555" text-anchor="end">구멍 e10</text>
+<rect x="575" y="62" width="22" height="16" fill="#bbb"/>
+<text x="563" y="76" fill="#fff" font-size="16" font-weight="700" text-anchor="end">14</text>
+<line x1="597" y1="70" x2="635" y2="70" stroke="#d62728" stroke-width="3"/>
+<text x="641" y="66" font-size="17" font-weight="700" fill="#d62728">VCC 5 V (CD 0.1 µF)</text>
+<text x="641" y="87" font-size="14" fill="#555">구멍 f10</text>
+<rect x="343" y="120" width="22" height="16" fill="#bbb"/>
+<text x="377" y="134" fill="#fff" font-size="16" font-weight="700">2</text>
+<line x1="343" y1="128" x2="305" y2="128" stroke="#e67e22" stroke-width="3"/>
+<text x="299" y="124" font-size="17" font-weight="700" fill="#e67e22" text-anchor="end">출력 → RF, 3번</text>
+<text x="299" y="145" font-size="14" fill="#555" text-anchor="end">구멍 e11</text>
+<rect x="575" y="120" width="22" height="16" fill="#bbb"/>
+<text x="563" y="134" fill="#fff" font-size="16" font-weight="700" text-anchor="end">13</text>
+<line x1="597" y1="128" x2="635" y2="128" stroke="#222" stroke-width="3"/>
+<text x="641" y="124" font-size="17" font-weight="700" fill="#222">입력 → GND</text>
+<text x="641" y="145" font-size="14" fill="#555">구멍 f11</text>
+<rect x="343" y="178" width="22" height="16" fill="#bbb"/>
+<text x="377" y="192" fill="#fff" font-size="16" font-weight="700">3</text>
+<line x1="343" y1="186" x2="305" y2="186" stroke="#e67e22" stroke-width="3"/>
+<text x="299" y="182" font-size="17" font-weight="700" fill="#e67e22" text-anchor="end">입력 ← 2번</text>
+<text x="299" y="203" font-size="14" fill="#555" text-anchor="end">구멍 e12</text>
+<rect x="575" y="178" width="22" height="16" fill="#bbb"/>
+<text x="563" y="192" fill="#fff" font-size="16" font-weight="700" text-anchor="end">12</text>
+<line x1="597" y1="186" x2="635" y2="186" stroke="#999" stroke-width="3"/>
+<text x="641" y="182" font-size="17" font-weight="700" fill="#999">출력 (비움)</text>
+<text x="641" y="203" font-size="14" fill="#555">구멍 f12</text>
+<rect x="343" y="236" width="22" height="16" fill="#bbb"/>
+<text x="377" y="250" fill="#fff" font-size="16" font-weight="700">4</text>
+<line x1="343" y1="244" x2="305" y2="244" stroke="#2e8b57" stroke-width="3"/>
+<text x="299" y="240" font-size="17" font-weight="700" fill="#2e8b57" text-anchor="end">출력 → UNO D5</text>
+<text x="299" y="261" font-size="14" fill="#555" text-anchor="end">구멍 e13</text>
+<rect x="575" y="236" width="22" height="16" fill="#bbb"/>
+<text x="563" y="250" fill="#fff" font-size="16" font-weight="700" text-anchor="end">11</text>
+<line x1="597" y1="244" x2="635" y2="244" stroke="#222" stroke-width="3"/>
+<text x="641" y="240" font-size="17" font-weight="700" fill="#222">입력 → GND</text>
+<text x="641" y="261" font-size="14" fill="#555">구멍 f13</text>
+<rect x="343" y="294" width="22" height="16" fill="#bbb"/>
+<text x="377" y="308" fill="#fff" font-size="16" font-weight="700">5</text>
+<line x1="343" y1="302" x2="305" y2="302" stroke="#222" stroke-width="3"/>
+<text x="299" y="298" font-size="17" font-weight="700" fill="#222" text-anchor="end">입력 → GND</text>
+<text x="299" y="319" font-size="14" fill="#555" text-anchor="end">구멍 e14</text>
+<rect x="575" y="294" width="22" height="16" fill="#bbb"/>
+<text x="563" y="308" fill="#fff" font-size="16" font-weight="700" text-anchor="end">10</text>
+<line x1="597" y1="302" x2="635" y2="302" stroke="#999" stroke-width="3"/>
+<text x="641" y="298" font-size="17" font-weight="700" fill="#999">출력 (비움)</text>
+<text x="641" y="319" font-size="14" fill="#555">구멍 f14</text>
+<rect x="343" y="352" width="22" height="16" fill="#bbb"/>
+<text x="377" y="366" fill="#fff" font-size="16" font-weight="700">6</text>
+<line x1="343" y1="360" x2="305" y2="360" stroke="#999" stroke-width="3"/>
+<text x="299" y="356" font-size="17" font-weight="700" fill="#999" text-anchor="end">출력 (비움)</text>
+<text x="299" y="377" font-size="14" fill="#555" text-anchor="end">구멍 e15</text>
+<rect x="575" y="352" width="22" height="16" fill="#bbb"/>
+<text x="563" y="366" fill="#fff" font-size="16" font-weight="700" text-anchor="end">9</text>
+<line x1="597" y1="360" x2="635" y2="360" stroke="#222" stroke-width="3"/>
+<text x="641" y="356" font-size="17" font-weight="700" fill="#222">입력 → GND</text>
+<text x="641" y="377" font-size="14" fill="#555">구멍 f15</text>
+<rect x="343" y="410" width="22" height="16" fill="#bbb"/>
+<text x="377" y="424" fill="#fff" font-size="16" font-weight="700">7</text>
+<line x1="343" y1="418" x2="305" y2="418" stroke="#222" stroke-width="3"/>
+<text x="299" y="414" font-size="17" font-weight="700" fill="#222" text-anchor="end">GND</text>
+<text x="299" y="435" font-size="14" fill="#555" text-anchor="end">구멍 e16</text>
+<rect x="575" y="410" width="22" height="16" fill="#bbb"/>
+<text x="563" y="424" fill="#fff" font-size="16" font-weight="700" text-anchor="end">8</text>
+<line x1="597" y1="418" x2="635" y2="418" stroke="#999" stroke-width="3"/>
+<text x="641" y="414" font-size="17" font-weight="700" fill="#999">출력 (비움)</text>
+<text x="641" y="435" font-size="14" fill="#555">구멍 f16</text>
+</svg></div></div>
+<div class="panel"><h2>② 회로 원리도</h2><div class="body"><svg viewBox="0 0 900 450" xmlns="http://www.w3.org/2000/svg" font-family="'Noto Sans CJK KR','Noto Sans KR',sans-serif">
+<rect x="60" y="120" width="150" height="190" fill="none" stroke="#8aa" stroke-width="2"/>
+<rect x="66" y="175" width="138" height="132" fill="#c9c9c4"/>
+<text x="135" y="250" font-size="15" fill="#444" text-anchor="middle" font-weight="400">페이스트</text>
+<text x="135" y="112" font-size="14" fill="#555" text-anchor="middle" font-weight="400">PET 용기 (벽)</text>
+<rect x="48" y="185" width="12" height="110" fill="#d9873b"/>
+<rect x="210" y="185" width="12" height="110" fill="#d9873b"/>
+<text x="54" y="330" font-size="15" fill="#a0522d" text-anchor="middle" font-weight="700">전극 B</text>
+<text x="216" y="330" font-size="15" fill="#a0522d" text-anchor="middle" font-weight="700">전극 A</text>
+<polyline points="48,240 30,240 30,390" fill="none" stroke="#222" stroke-width="2.2"/>
+<text x="30" y="410" font-size="15" fill="#222" text-anchor="middle" font-weight="700">GND</text>
+<polyline points="222,240 250,240 250,200 320,200" fill="none" stroke="#e67e22" stroke-width="2.2"/>
+<circle cx="280" cy="200" r="5" fill="#e67e22"/>
+<polygon points="320,170 320,230 390,200" fill="#eef4fb" stroke="#17324d" stroke-width="2"/><circle cx="397" cy="200" r="7" fill="#fff" stroke="#17324d" stroke-width="2"/><text x="348" y="252" font-size="13" fill="#555" text-anchor="middle" font-weight="400">74HC14 (1→2번)</text>
+<text x="312" y="190" font-size="13" fill="#555" text-anchor="end" font-weight="400">1번</text>
+<polyline points="404,200 470,200" fill="none" stroke="#e67e22" stroke-width="2.2"/>
+<circle cx="440" cy="200" r="5" fill="#e67e22"/>
+<text x="410" y="190" font-size="13" fill="#555" text-anchor="start" font-weight="400">2번</text>
+<polyline points="280,200 280,110 330,110" fill="none" stroke="#e67e22" stroke-width="2.2"/>
+<rect x="330" y="98" width="90" height="24" rx="4" fill="#fff" stroke="#17324d" stroke-width="1.5"/><text x="375.0" y="114.9" font-size="14" text-anchor="middle" font-weight="400">RF 1 MΩ</text>
+<polyline points="420,110 440,110 440,200" fill="none" stroke="#e67e22" stroke-width="2.2"/>
+<polygon points="470,170 470,230 540,200" fill="#eef4fb" stroke="#17324d" stroke-width="2"/><circle cx="547" cy="200" r="7" fill="#fff" stroke="#17324d" stroke-width="2"/><text x="498" y="252" font-size="13" fill="#555" text-anchor="middle" font-weight="400">74HC14 (3→4번)</text>
+<text x="462" y="190" font-size="13" fill="#555" text-anchor="end" font-weight="400">3번</text>
+<polyline points="554,200 640,200" fill="none" stroke="#2e8b57" stroke-width="2.2"/>
+<text x="560" y="190" font-size="13" fill="#555" text-anchor="start" font-weight="400">4번</text>
+<rect x="640" y="180" width="110" height="40" rx="4" fill="#fff" stroke="#17324d" stroke-width="1.5"/><text x="695.0" y="205.6" font-size="16" text-anchor="middle" font-weight="700">UNO D5</text>
+<text x="640" y="250" font-size="14" fill="#2e8b57" text-anchor="start" font-weight="400">주파수 측정 (펄스 수 세기)</text>
+<text x="330" y="300" font-size="15" fill="#d62728" text-anchor="start" font-weight="700">전원: 14번 = 5 V, 7번 = GND</text>
+<text x="330" y="325" font-size="14" fill="#555" text-anchor="start" font-weight="400">안 쓰는 입력 5·9·11·13번 → GND</text>
+<text x="330" y="348" font-size="14" fill="#555" text-anchor="start" font-weight="400">안 쓰는 출력 6·8·10·12번 → 비워 둠</text>
+<text x="330" y="371" font-size="14" fill="#555" text-anchor="start" font-weight="400">CD 0.1 µF: 14번 줄 ↔ GND</text>
+<text x="330" y="400" font-size="14" fill="#e67e22" text-anchor="start" font-weight="400">전극 사이 정전용량 C와 RF가 발진 주파수를 정함</text>
+</svg></div></div>
+<div class="panel full"><h2>③ 센서(S3) 기구 · 치수</h2><div class="body" style="display:flex;justify-content:center"><div style="width:1150px"><svg viewBox="0 0 900 440" xmlns="http://www.w3.org/2000/svg" font-family="'Noto Sans CJK KR','Noto Sans KR',sans-serif">
+<rect x="62" y="205.0" width="217.1" height="163.0" fill="#d2d2cc"/>
+<rect x="60" y="40" width="221.1" height="330.0" fill="none" stroke="#8aa" stroke-width="2"/>
+<line x1="60" y1="205.0" x2="281.1" y2="205.0" stroke="#1D9E75" stroke-dasharray="6 4" stroke-width="2"/>
+<rect x="137.55" y="221.5" width="66.0" height="132.0" fill="#d9873b" stroke="#8a4b16"/>
+<rect x="187.04999999999998" y="188.5" width="16.5" height="33.0" fill="#d9873b" stroke="#8a4b16"/>
+<text x="291.1" y="210.0" font-size="13" fill="#1D7A5B" text-anchor="start" font-weight="400">충전선 50</text>
+<text x="291.1" y="226.5" font-size="13" fill="#17324d" text-anchor="start" font-weight="400">구리 위끝 45</text>
+<text x="291.1" y="358.5" font-size="13" fill="#17324d" text-anchor="start" font-weight="400">구리 아래끝 5</text>
+<text x="291.1" y="52" font-size="13" fill="#17324d" text-anchor="start" font-weight="400">높이 100</text>
+<text x="170.55" y="392.0" font-size="13" fill="#555" text-anchor="middle" font-weight="400">바깥 벽 정면 · 구리 20×40, 폭 중앙 · 꼬리 5×10</text>
+<rect x="600" y="150" width="201" height="201" fill="none" stroke="#8aa" stroke-width="2"/>
+<rect x="594" y="220.5" width="6" height="60" fill="#d9873b"/><rect x="801" y="220.5" width="6" height="60" fill="#d9873b"/>
+<text x="700.5" y="373" font-size="13" fill="#555" text-anchor="middle" font-weight="400">위에서 본 모습 · 마주 보는 바깥 벽</text>
+<text x="700.5" y="393" font-size="13" fill="#d62728" text-anchor="middle" font-weight="400">구리는 페이스트에 절대 안 닿음</text>
+</svg></div></div></div>
+<div class="panel"><h2>④ 만드는 순서</h2><div class="body"><h3>센서</h3><ol><li>PET 사각 용기(67 × 67 × 100) 바깥 벽을 알코올로 닦기.</li><li>구리테이프 20 × 40 mm 두 장, 위 모서리에 꼬리 5 × 10 mm 남기기.</li><li>마주 보는 두 <b>바깥</b> 벽의 폭 중앙, 바닥에서 <b>5~45 mm</b>에 기포 없이 붙이기.</li><li>꼬리를 바깥으로 접고 집게선 연결, 테이프 위는 투명 테이프로 덮기.</li><li>충전선 50 mm 표시. 페이스트가 바깥 구리에 묻으면 바로 닦기.</li></ol>
+<h3>회로</h3><ol><li><b>칩부터 꽂기.</b> 가운데 홈에 걸치고 반달 홈이 1행 쪽. 왼쪽 줄 = 1번부터, 오른쪽 줄 = 마지막 번호부터.</li><li>전원 레일 점퍼(표 1~6번)와 칩·부품 전원 점퍼를 꽂기.</li><li>부품 표대로 저항·커패시터 꽂기. 다리 두 개가 같은 행이면 합선.</li><li>나머지 신호 점퍼를 표 순서대로.</li><li>Arduino·LCD·DS18B20·집게선 연결. 집게선은 짧게, 테이프로 고정.</li><li><b>USB 연결 전에</b> 칩 방향과 5 V·GND 레일을 한 번 더 확인.</li></ol>
+<h3>전원 켠 뒤 확인 (멀티미터 검은 리드 = GND)</h3><ul><li>칩 14번 핀: <b>5 V</b>, 7번: <b>0 V</b>, 5·9·11·13번: <b>0 V</b></li><li>전극 연결 후 칩 2번 핀 멀티미터 DC: <b>중간값</b>이면 발진 중</li><li>Arduino D5 주파수가 0이 아니면 정상 (빈 용기에서도 발진해야 함)</li></ul></div></div>
+<div class="panel"><h2>⑤ 부품 위치 (구멍 번호)</h2><div class="body"><b>칩 U1 핀</b><table><tr><th>핀</th><th>구멍</th></tr><tr><td>1번</td><td>e10</td></tr><tr><td>2번</td><td>e11</td></tr><tr><td>3번</td><td>e12</td></tr><tr><td>4번</td><td>e13</td></tr><tr><td>5번</td><td>e14</td></tr><tr><td>6번</td><td>e15</td></tr><tr><td>7번</td><td>e16</td></tr><tr><td>8번</td><td>f16</td></tr><tr><td>9번</td><td>f15</td></tr><tr><td>10번</td><td>f14</td></tr><tr><td>11번</td><td>f13</td></tr><tr><td>12번</td><td>f12</td></tr><tr><td>13번</td><td>f11</td></tr><tr><td>14번</td><td>f10</td></tr></table><br><b>저항·커패시터</b><table><tr><th>부품</th><th>값</th><th>다리 1</th><th>다리 2</th></tr><tr><td>RT</td><td>4.7 kΩ</td><td>T+20</td><td>a26</td></tr><tr><td>CD</td><td>0.1 µF ceramic</td><td>j10</td><td>B-8</td></tr><tr><td>RF</td><td>1 MΩ</td><td>a10</td><td>a11</td></tr></table><br><b>부품 목록 (BOM)</b><table><tr><th>No.</th><th>부품</th><th>수량</th></tr><tr><td>1</td><td>Arduino Uno (R3 호환)</td><td>1</td></tr><tr><td>2</td><td>브레드보드 830홀</td><td>1</td></tr><tr><td>3</td><td>I2C LCD 16×2</td><td>1</td></tr><tr><td>4</td><td>방수 온도센서 DS18B20</td><td>1</td></tr><tr><td>5</td><td>PET 사각 용기 67 × 67 × 100</td><td>1</td></tr><tr><td>6</td><td>구리테이프 20 × 40 + 꼬리</td><td>2</td></tr><tr><td>7</td><td>투명 테이프</td><td>1</td></tr><tr><td>8</td><td>IC U1 — 74HC14 DIP-14</td><td>1</td></tr><tr><td>9</td><td>RT 4.7 kΩ</td><td>1</td></tr><tr><td>10</td><td>CD 0.1 µF ceramic</td><td>1</td></tr><tr><td>11</td><td>RF 1 MΩ</td><td>1</td></tr><tr><td>12</td><td>집게선 ≤10 cm, 테이프 고정</td><td>2</td></tr><tr><td>13</td><td>점퍼선 (18 보드 + 12 외부·집게)</td><td>30</td></tr><tr><td>14</td><td>선택: 기준 커패시터 10/22/47/100 pF 중 1</td><td>1</td></tr></table></div></div>
+<div class="panel full"><h2>⑥ 점퍼·외부선 전체 목록 (Rev 3.1과 동일)</h2><div class="body" style="columns:3;column-gap:24px"><table><tr><th>No.</th><th>시작</th><th>끝</th><th>넷</th></tr><tr><td>1</td><td>T+25</td><td>T+26</td><td>5V</td></tr><tr><td>2</td><td>T-25</td><td>T-26</td><td>GND</td></tr><tr><td>3</td><td>B+25</td><td>B+26</td><td>5V</td></tr><tr><td>4</td><td>B-25</td><td>B-26</td><td>GND</td></tr><tr><td>5</td><td>T+50</td><td>B+50</td><td>5V</td></tr><tr><td>6</td><td>T-50</td><td>B-50</td><td>GND</td></tr><tr><td>7</td><td>i10</td><td>B+8</td><td>5V</td></tr><tr><td>8</td><td>a16</td><td>T-12</td><td>GND</td></tr><tr><td>9</td><td>a14</td><td>T-11</td><td>GND</td></tr><tr><td>10</td><td>j15</td><td>B-12</td><td>GND</td></tr><tr><td>11</td><td>j13</td><td>B-10</td><td>GND</td></tr><tr><td>12</td><td>j11</td><td>B-9</td><td>GND</td></tr><tr><td>13</td><td>i47</td><td>i48</td><td>DATA</td></tr><tr><td>14</td><td>h48</td><td>b26</td><td>DATA</td></tr><tr><td>15</td><td>i49</td><td>i50</td><td>SDA</td></tr><tr><td>16</td><td>i51</td><td>i52</td><td>SCL</td></tr><tr><td>17</td><td>b11</td><td>a12</td><td>OUTPUT</td></tr><tr><td>18</td><td>a13</td><td>i54</td><td>FREQ</td></tr><tr><td>19</td><td>UNO.5V</td><td>T+1</td><td>5V</td></tr><tr><td>20</td><td>UNO.GND</td><td>T-1</td><td>GND</td></tr><tr><td>21</td><td>LCD.VCC</td><td>T+3</td><td>5V</td></tr><tr><td>22</td><td>LCD.GND</td><td>T-3</td><td>GND</td></tr><tr><td>23</td><td>Electrode A</td><td>c10</td><td>INPUT</td></tr><tr><td>24</td><td>Electrode B</td><td>T-7</td><td>GND</td></tr><tr><td>25</td><td>UNO.D2</td><td>j47</td><td>DATA</td></tr><tr><td>26</td><td>UNO.A4</td><td>j49</td><td>SDA</td></tr><tr><td>27</td><td>LCD.SDA</td><td>j50</td><td>SDA</td></tr><tr><td>28</td><td>UNO.A5</td><td>j51</td><td>SCL</td></tr><tr><td>29</td><td>LCD.SCL</td><td>j52</td><td>SCL</td></tr><tr><td>30</td><td>UNO.D5</td><td>j54</td><td>FREQ</td></tr></table></div></div>
+<div class="panel full"><h2>⑦ Rev 3.1 대비 수정 사항</h2><div class="body"><ul><li>용기: "PP cup H45, 바닥 Ø ≥70" → <b>PET 사각 67 × 67 × 100</b>, 충전선 50 mm. 구리 20 × 40 mm는 바닥에서 5~45 mm.</li><li>칩(U1)을 1단계로 올리고 핀별 연결을 그림으로 표시.</li><li>회로·구멍 번호·점퍼: Rev 3.1과 동일 (자동 연결 검증 통과).</li></ul></div></div>
+</div></div></body></html>
