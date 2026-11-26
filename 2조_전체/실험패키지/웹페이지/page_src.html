@@ -164,12 +164,12 @@ figcaption{margin-top:6px}
       <tr><td>푸시버튼</td><td>1</td><td>키트</td><td>없어도 됨 (PC 명령으로 대신)</td></tr>
       <tr><td>방수 DS18B20 + 4.7 kΩ</td><td>1</td><td>구매품</td><td></td></tr>
       <tr><td>악어클립 케이블</td><td>2</td><td>구매품</td><td>와셔 볼트 → 보드</td></tr>
-      <tr><td>멀티미터</td><td>1</td><td></td><td>점검·보정 필수</td></tr>
+      <tr><td>멀티미터</td><td>—</td><td></td><td><b>쓰지 않음</b> (빌릴 수 있으면 고장 찾을 때 편함)</td></tr>
     </tbody></table></div>
 
   <h3>보드 조립</h3>
   <ul class="check" data-group="prep">
-    <li><label><input type="checkbox" id="c-prep-1"><span>R1·RQ를 꽂기 <b>전에</b> 멀티미터로 재서 값 적어 두기 (예: 329.6 Ω)</span></label></li>
+    <li><label><input type="checkbox" id="c-prep-1"><span>꽂기 전에 순서표를 옆에 두고 한 줄씩 체크하면서 꽂기 (멀티미터 없이 하니까 조립 단계에서 실수를 막는 게 중요)</span></label></li>
     <li><label><input type="checkbox" id="c-prep-2"><span>칩 LM358 꽂기 — 반달 홈이 1행 쪽(왼쪽)</span></label></li>
     <li><label><input type="checkbox" id="c-prep-3"><span>레일 점퍼 1~6번 (위·아래 레일 25/26 이어 주기)</span></label></li>
     <li><label><input type="checkbox" id="c-prep-4"><span>저항·커패시터·버튼 (아래 ② 표) — 전해 커패시터 방향 확인</span></label></li>
@@ -192,26 +192,16 @@ figcaption{margin-top:6px}
   <ul class="check" data-group="fw">
     <li><label><input type="checkbox" id="c-fw-1"><span>Arduino IDE에서 <code>wc_meter.ino</code> 열기 → 보드 "Arduino Uno" → 업로드 (추가 라이브러리 없음)</span></label></li>
     <li><label><input type="checkbox" id="c-fw-2"><span>시리얼 모니터 115200 baud, 줄 끝 "새 줄" → <code>h</code> 입력해서 명령 목록 확인</span></label></li>
-    <li><label><input type="checkbox" id="c-fw-3"><span><code>r1 329.6</code>, <code>rq 330.1</code>처럼 실측값 입력 (EEPROM에 저장됨) → <code>info</code>로 확인</span></label></li>
+    <li><label><input type="checkbox" id="c-fw-3"><span><code>info</code>로 설정 확인. <code>r1</code>·<code>rq</code>는 기본값 330 그대로 (1% 저항이라 충분)</span></label></li>
   </ul>
   <p class="small">옛 스케치 <code>contact_sine_4S.ino</code>는 쓰지 않아 (MID/AMP 옛 값, RMS 방식).</p>
 
-  <h3>전원 점검</h3>
-  <p>멀티미터 검은 리드 = GND. 집게 E1–E4에 100 Ω 시험 저항을 물린 상태.</p>
-  <div class="tw"><table>
-    <thead><tr><th>측정 위치</th><th>정상 (추정, USB 5 V 기준)</th><th>다르면</th></tr></thead>
-    <tbody>
-      <tr><td>LM358 8번</td><td class="m">4.7 ~ 5.1 V</td><td>칩 방향·5 V 레일</td></tr>
-      <tr><td>LM358 4번</td><td class="m">0 V</td><td></td></tr>
-      <tr><td>LM358 1번 (사인 출력, DC)</td><td class="m">약 2.1 V (5 V의 42%)</td><td>필터·D3 선</td></tr>
-      <tr><td>LM358 5번, 7번</td><td class="m">약 1.8 V (5 V의 36%)</td><td>RV1·RV2a·RV2b 값, CV 방향</td></tr>
-      <tr><td>A1, A0 줄 (DC)</td><td class="m">약 1.8 V</td><td>CS 방향, R1</td></tr>
-      <tr><td>CS 양 끝</td><td class="m">+ 쪽이 약 0.3 V 높음</td><td><b>반대면 CS를 뒤집어 꽂기</b></td></tr>
-    </tbody></table></div>
+  <h3>동작 점검 (멀티미터 없이)</h3>
+  <div class="note w"><b>두 번 확인:</b> LM358 방향(반달 홈 = 1행 쪽), 전해 커패시터 CS·CV 방향(긴 다리 = +, 순서표 "다리 1"), 5 V·GND 레일 점퍼. USB를 꽂고 칩이나 부품이 뜨거워지면 <b>바로 뽑아.</b></div>
   <ul class="check" data-group="pc">
-    <li><label><input type="checkbox" id="c-pc-1"><span>전압 표 통과</span></label></li>
-    <li><label><input type="checkbox" id="c-pc-2"><span><code>s</code> → MEAS 줄의 Z가 시험 저항 실측값 ±2% 안</span></label></li>
-    <li><label><input type="checkbox" id="c-pc-3"><span>집게를 Q1·Q4로 옮겨 <code>q</code> → 같은 확인</span></label></li>
+    <li><label><input type="checkbox" id="c-pc-1"><span>USB 연결 → Arduino 전원 LED·LCD 백라이트 켜짐, 시리얼에 <code># 2조 W/C 측정기 Rev5 시작</code></span></label></li>
+    <li><label><input type="checkbox" id="c-pc-2"><span>집게 E1·E4에 키트 100 Ω → <code>s</code> → Z가 <b>94~106 Ω</b></span></label></li>
+    <li><label><input type="checkbox" id="c-pc-3"><span>집게를 Q1·Q4로 → <code>q</code> → 같은 범위, <b>사인과 사각 차이 2% 안</b> (같은 저항이니 저항 오차와 상관없이 맞아야 함)</span></label></li>
     <li><label><input type="checkbox" id="c-pc-4"><span>(오실로스코프가 있으면) 1번 핀이 아래가 평평하지 않은 사인파, 약 1.1~3.1 V</span></label></li>
   </ul>
 
@@ -293,7 +283,7 @@ figcaption{margin-top:6px}
     <li><label><input type="checkbox" id="c-cell-5"><span>바깥에서: <b>M12 → M4 → 너트</b>. 손으로 꽉 + 렌치로 살짝만 (세게 조이면 PET가 찌그러져 샘)</span></label></li>
     <li><label><input type="checkbox" id="c-cell-6"><span>반대쪽 벽도 똑같이. 바깥에 <b>A</b>, <b>B</b> 유성펜으로 표시</span></label></li>
     <li><label><input type="checkbox" id="c-cell-7"><span>자로 <b>두 M12 와셔 면 사이 거리</b>를 재서 기록 (보고서에 셀 치수로 씀)</span></label></li>
-    <li><label><input type="checkbox" id="c-cell-8"><span>멀티미터 저항 모드로 볼트 바깥 끝 ↔ 같은 쪽 안쪽 M12 와셔: 거의 0 Ω이면 연결 정상. 빈 용기에서 A ↔ B는 끊김(OL)이어야 함</span></label></li>
+    <li><label><input type="checkbox" id="c-cell-8"><span>연결 확인은 누수 시험 때: 물을 채운 채 <code>s</code> → "전극 열림" 경고가 안 뜨면 볼트–와셔 연결 정상</span></label></li>
     <li><label><input type="checkbox" id="c-cell-9"><span>누수 시험(2단계): 물 50 mm, 하루. 새면 벽과 바깥 M12 사이(또는 안쪽 M12와 벽 사이)에 고무 패킹 추가</span></label></li>
   </ul>
 
@@ -328,7 +318,7 @@ figcaption{margin-top:6px}
   <h3>이름 규칙 (분석기가 이걸로 묶음)</h3>
   <div class="tw"><table><thead><tr><th>이름</th><th>뜻</th></tr></thead><tbody>
     <tr><td class="m">W050-B1-M1</td><td>W/C 0.50, 배합 1번, 측정 회차 1</td></tr>
-    <tr><td class="m">CAL-100.4</td><td>보정 저항 (멀티미터 값을 이름에)</td></tr>
+    <tr><td class="m">CAL-100</td><td>보정 저항 (표시값을 이름에)</td></tr>
     <tr><td class="m">SALT-4</td><td>소금물 4 g/L</td></tr>
     <tr><td class="m">ALPHA-15</td><td>α 측정, 15 °C 단계 (단계마다 이름 바꾸기)</td></tr>
   </tbody></table></div>
@@ -337,10 +327,10 @@ figcaption{margin-top:6px}
 <section id="s1">
   <h2><span class="st">STEP 1</span>보정 저항 <span class="small">20분</span></h2>
   <ul class="check" data-group="s1">
-    <li><label><input type="checkbox" id="c-s1-1"><span>키트 100 Ω, 1 kΩ을 멀티미터로 재기 (예: 100.4, 996)</span></label></li>
-    <li><label><input type="checkbox" id="c-s1-2"><span>집게 E1·E4에 100 Ω → <code>l CAL-100.4</code> → <code>t</code> → <code>s</code> → 집게를 Q1·Q4로 → <code>q</code></span></label></li>
-    <li><label><input type="checkbox" id="c-s1-3"><span>1 kΩ도 같은 방법</span></label></li>
-    <li><label><input type="checkbox" id="c-s1-4"><span>합격: 둘 다 ±2% 안 (넘으면 <code>r1</code>/<code>rq</code> 입력, 집게 물림 확인)</span></label></li>
+    <li><label><input type="checkbox" id="c-s1-1"><span>키트 100 Ω: 집게 E1·E4 → <code>l CAL-100</code> → <code>t</code> → <code>s</code> → 집게를 Q1·Q4로 → <code>q</code></span></label></li>
+    <li><label><input type="checkbox" id="c-s1-2"><span>키트 1 kΩ: <code>l CAL-1000</code>으로 같은 방법</span></label></li>
+    <li><label><input type="checkbox" id="c-s1-3"><span>330 Ω 1% 여분이 있으면 <code>l CAL-330</code>으로 한 번 더 (가장 정확한 확인)</span></label></li>
+    <li><label><input type="checkbox" id="c-s1-4"><span>합격: 키트 저항 ±6% 안, 330 Ω 1%는 ±2% 안, <b>같은 저항에서 사인과 사각이 2% 안으로 일치</b></span></label></li>
   </ul>
 </section>
 

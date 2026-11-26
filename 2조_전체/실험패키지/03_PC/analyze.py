@@ -8,7 +8,7 @@
 
 시료 이름(label) 규칙 — 펌웨어에서 'l 이름' 으로 입력
   W050-B1-M1  : W/C 0.50, 배합 1번, 측정 회차 1 (재혼합 후 2회차는 M2)
-  CAL-100.4   : 보정 저항 (멀티미터로 잰 값 100.4 Ω을 이름에)
+  CAL-100     : 보정 저항 (저항 표시값을 이름에)
   SALT-4      : 소금물 4 g/L
   ALPHA-12    : 온도계수 측정. 온도 단계마다 이름을 바꿈 (ALPHA-12, ALPHA-15 …). 같은 시료로 측정
   그 밖의 이름은 표에만 나열
@@ -140,12 +140,12 @@ def main():
     # ---- 보정 저항 ----
     cal = [m for m in meas if m["label"].upper().startswith("CAL-")]
     if cal:
-        rpt += ["## 2. 보정 저항 확인", "", "| 이름 | 방식 | 멀티미터 [Ω] | 측정 Z [Ω] | 오차 |", "|---|---|---|---|---|"]
+        rpt += ["## 2. 보정 저항 확인", "", "| 이름 | 방식 | 표시값 [Ω] | 측정 Z [Ω] | 오차 |", "|---|---|---|---|---|"]
         for m in cal:
             try: ref = float(m["label"].split("-", 1)[1])
             except ValueError: ref = float("nan")
             rpt.append(f"| {m['label']} | {MODE_KO.get(m['mode'], m['mode'])} | {fnum(ref,1)} | {fnum(m['Zr'])} | {fnum(100*(m['Zr']/ref-1),2)}% |")
-        rpt += ["", "- 오차가 ±2%를 넘으면 `r1`·`rq` 명령으로 기준저항 실측값을 넣었는지, 집게가 제대로 물렸는지 확인.", ""]
+        rpt += ["", "- 키트 저항(5%)은 ±6%, 1% 저항은 ±2% 안이면 정상. 같은 저항에서 사인과 사각이 2% 넘게 다르면 집게 물림·RQ·R1 위치 확인.", ""]
 
     # ---- 소금물 ----
     salt = defaultdict(lambda: defaultdict(list))
