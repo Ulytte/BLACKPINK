@@ -1,0 +1,75 @@
+<h4>① 칩 LM358 (반달 홈이 1행 쪽)</h4><div class="tw"><table><thead><tr><th>핀</th><th>구멍</th><th>역할</th></tr></thead><tbody>
+<tr><td class="n">1</td><td class="m">e10</td><td>A 출력 = 사인파</td></tr>
+<tr><td class="n">2</td><td class="m">e11</td><td>A − 입력 (1번과 연결)</td></tr>
+<tr><td class="n">3</td><td class="m">e12</td><td>A + 입력 (필터 출력)</td></tr>
+<tr><td class="n">4</td><td class="m">e13</td><td>GND</td></tr>
+<tr><td class="n">5</td><td class="m">f13</td><td>B + 입력 (기준 1.8 V)</td></tr>
+<tr><td class="n">6</td><td class="m">f12</td><td>B − 입력 (7번과 연결)</td></tr>
+<tr><td class="n">7</td><td class="m">f11</td><td>B 출력 = 가상 접지</td></tr>
+<tr><td class="n">8</td><td class="m">f10</td><td>5 V</td></tr>
+</tbody></table></div><h4>② 저항·커패시터·버튼</h4><div class="tw"><table><thead><tr><th>부품</th><th>값</th><th>다리 1</th><th>다리 2</th><th></th></tr></thead><tbody>
+<tr><td class="m">RT</td><td>4.7 kΩ</td><td class="m">T+20</td><td class="m">a26</td><td></td></tr>
+<tr><td class="m">RA</td><td>10 kΩ</td><td class="m">b17</td><td class="m">b15</td><td></td></tr>
+<tr><td class="m">RB</td><td>10 kΩ</td><td class="m">d15</td><td class="m">d12</td><td></td></tr>
+<tr><td class="m">C1</td><td>10 nF (103)</td><td class="m">c15</td><td class="m">c10</td><td></td></tr>
+<tr><td class="m">C2</td><td>4.7 nF (472)</td><td class="m">b12</td><td class="m">T-9</td><td></td></tr>
+<tr><td class="m">CS</td><td>10 µF 50 V (+/−)</td><td class="m">c30</td><td class="m">c32</td><td><span class="chip warn">긴 다리 = + = 다리 1</span></td></tr>
+<tr><td class="m">R1</td><td>330 Ω 1%</td><td class="m">a32</td><td class="m">a34</td><td></td></tr>
+<tr><td class="m">RV1</td><td>10 kΩ</td><td class="m">T+32</td><td class="m">a40</td><td></td></tr>
+<tr><td class="m">RV2a</td><td>4.7 kΩ</td><td class="m">b40</td><td class="m">b42</td><td></td></tr>
+<tr><td class="m">RV2b</td><td>1 kΩ</td><td class="m">a42</td><td class="m">T-34</td><td></td></tr>
+<tr><td class="m">CV</td><td>10 µF 50 V (+/−)</td><td class="m">c40</td><td class="m">T-32</td><td><span class="chip warn">긴 다리 = + = 다리 1</span></td></tr>
+<tr><td class="m">CD</td><td>0.1 µF (104)</td><td class="m">j10</td><td class="m">B-8</td><td></td></tr>
+<tr class=hl><td class="m">RPA1</td><td>1 kΩ</td><td class="m">b11</td><td class="m">T-8</td><td> <span class="chip new">Rev 5</span></td></tr>
+<tr class=hl><td class="m">RPA2</td><td>1 kΩ</td><td class="m">c11</td><td class="m">T-7</td><td> <span class="chip new">Rev 5</span></td></tr>
+<tr class=hl><td class="m">RPA3</td><td>1 kΩ</td><td class="m">a30</td><td class="m">T-24</td><td> <span class="chip new">Rev 5</span></td></tr>
+<tr class=hl><td class="m">RPB1</td><td>1 kΩ</td><td class="m">g11</td><td class="m">B-9</td><td> <span class="chip new">Rev 5</span></td></tr>
+<tr class=hl><td class="m">RPB2</td><td>1 kΩ</td><td class="m">i11</td><td class="m">B-7</td><td> <span class="chip new">Rev 5</span></td></tr>
+<tr class=hl><td class="m">RQ</td><td>330 Ω 1%</td><td class="m">g30</td><td class="m">g34</td><td> <span class="chip new">Rev 5</span></td></tr>
+<tr class="hl"><td class="m">SW</td><td>택트 스위치</td><td class="m">e20·e22</td><td class="m">f20·f22</td><td>가운데 홈에 걸침 <span class="chip new">Rev 5</span></td></tr>
+</tbody></table></div><h4>③ 보드 위 점퍼 (그림의 원 안 번호)</h4><div class="tw"><table><thead><tr><th>번호</th><th>넷</th><th>시작</th><th>끝</th></tr></thead><tbody>
+<tr><td class="n">1</td><td>5V</td><td class="m">T+25</td><td class="m">T+26</td></tr>
+<tr><td class="n">2</td><td>GND</td><td class="m">T-25</td><td class="m">T-26</td></tr>
+<tr><td class="n">3</td><td>5V</td><td class="m">B+25</td><td class="m">B+26</td></tr>
+<tr><td class="n">4</td><td>GND</td><td class="m">B-25</td><td class="m">B-26</td></tr>
+<tr><td class="n">5</td><td>5V</td><td class="m">T+50</td><td class="m">B+50</td></tr>
+<tr><td class="n">6</td><td>GND</td><td class="m">T-50</td><td class="m">B-50</td></tr>
+<tr><td class="n">7</td><td>5V</td><td class="m">i10</td><td class="m">B+8</td></tr>
+<tr><td class="n">8</td><td>GND</td><td class="m">a13</td><td class="m">T-10</td></tr>
+<tr><td class="n">9</td><td>DATA</td><td class="m">i46</td><td class="m">i47</td></tr>
+<tr><td class="n">10</td><td>DATA</td><td class="m">h47</td><td class="m">b26</td></tr>
+<tr><td class="n">11</td><td>SDA</td><td class="m">i48</td><td class="m">i49</td></tr>
+<tr><td class="n">12</td><td>SCL</td><td class="m">i50</td><td class="m">i51</td></tr>
+<tr><td class="n">13</td><td>PWM</td><td class="m">i52</td><td class="m">a17</td></tr>
+<tr><td class="n">14</td><td>SINE</td><td class="m">a10</td><td class="m">a11</td></tr>
+<tr><td class="n">15</td><td>SINE</td><td class="m">b10</td><td class="m">b30</td></tr>
+<tr><td class="n">16</td><td>VD</td><td class="m">d32</td><td class="m">i58</td></tr>
+<tr><td class="n">17</td><td>NODE</td><td class="m">b34</td><td class="m">i54</td></tr>
+<tr><td class="n">18</td><td>NODE</td><td class="m">h54</td><td class="m">i55</td></tr>
+<tr><td class="n">19</td><td>VG</td><td class="m">j12</td><td class="m">j11</td></tr>
+<tr><td class="n">20</td><td>VG</td><td class="m">h11</td><td class="m">i56</td></tr>
+<tr><td class="n">21</td><td>VREF</td><td class="m">d40</td><td class="m">i13</td></tr>
+<tr class=hl><td class="n">22</td><td>GND <span class="chip new">Rev 5</span></td><td class="m">a22</td><td class="m">T-17</td></tr>
+</tbody></table></div><h4>④ 바깥 장치로 가는 선</h4><div class="tw"><table><thead><tr><th>장치 쪽</th><th>구멍</th></tr></thead><tbody>
+<tr><td>Arduino 5V</td><td class="m">T+1</td></tr>
+<tr><td>Arduino GND</td><td class="m">T-1</td></tr>
+<tr><td>LCD VCC</td><td class="m">T+3</td></tr>
+<tr><td>LCD GND</td><td class="m">T-3</td></tr>
+<tr><td>Arduino D2</td><td class="m">j46</td></tr>
+<tr><td>Arduino A4</td><td class="m">j48</td></tr>
+<tr><td>LCD SDA</td><td class="m">j49</td></tr>
+<tr><td>Arduino A5</td><td class="m">j50</td></tr>
+<tr><td>LCD SCL</td><td class="m">j51</td></tr>
+<tr><td>Arduino D3</td><td class="m">j52</td></tr>
+<tr><td>사인 집게 E1 (와셔 A)</td><td class="m">j54</td></tr>
+<tr><td>Arduino A0</td><td class="m">j55</td></tr>
+<tr><td>사인 집게 E4 (와셔 B)</td><td class="m">j56</td></tr>
+<tr><td>Arduino A1</td><td class="m">j58</td></tr>
+<tr><td>Arduino D9</td><td class="m">j30</td></tr>
+<tr><td>Arduino A2</td><td class="m">i30</td></tr>
+<tr><td>사각 집게 Q1 (와셔 A)</td><td class="m">j34</td></tr>
+<tr><td>Arduino A3</td><td class="m">i34</td></tr>
+<tr><td>Arduino D8</td><td class="m">j38</td></tr>
+<tr><td>사각 집게 Q4 (와셔 B)</td><td class="m">i38</td></tr>
+<tr><td>Arduino D7</td><td class="m">a20</td></tr>
+</tbody></table></div>

@@ -1,0 +1,633 @@
+<title>2조 W/C 실험 가이드</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: 상단 고정 진행 바 + 좌측 목차(넓은 화면) / 한 줄 본문. 실험실 매뉴얼: 회색 시멘트 톤, 측정 계기 청록 강조 */
+:root{
+  --bg:#f3f4f2; --panel:#ffffff; --ink:#1d2326; --muted:#5d686d; --line:#d7dcdb;
+  --accent:#0e6e7a; --accent-weak:#d9eef0; --warn:#a35a00; --warn-weak:#fbecd6; --bad:#b3261e; --ok:#2f7d32;
+  --hl:#fff7e0;
+  --f-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#14191b; --panel:#1c2326; --ink:#e4e9ea; --muted:#9aa6aa; --line:#2f393c;
+  --accent:#4fb8c4; --accent-weak:#16353a; --warn:#f0a94a; --warn-weak:#3a2a12; --bad:#ff8a80; --ok:#81c784; --hl:#2c2a1c; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#14191b; --panel:#1c2326; --ink:#e4e9ea; --muted:#9aa6aa; --line:#2f393c;
+  --accent:#4fb8c4; --accent-weak:#16353a; --warn:#f0a94a; --warn-weak:#3a2a12; --bad:#ff8a80; --ok:#81c784; --hl:#2c2a1c; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.65 var(--f-body);margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--panel)}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--panel);border-bottom:1px solid var(--line)}
+.top .in{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));max-width:1180px;margin:0 auto}
+.brand{font-weight:700;letter-spacing:-.01em}
+.brand small{color:var(--muted);font-weight:400;margin-left:6px}
+.prog{flex:1;min-width:140px;display:flex;align-items:center;gap:8px;font:12px var(--f-mono);color:var(--muted)}
+.bar{flex:1;height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s}
+.wrap{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:220px minmax(0,1fr);gap:32px;padding-block:24px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+nav.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 64px);align-self:start;font-size:13.5px;display:flex;flex-direction:column;gap:2px}
+nav.toc a{color:var(--muted);text-decoration:none;padding:4px 8px;border-radius:4px}
+nav.toc a:hover,nav.toc a:focus-visible{background:var(--accent-weak);color:var(--ink);outline:none}
+main{min-width:0;display:flex;flex-direction:column;gap:28px}
+section{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:22px 24px;min-width:0}
+h1{font-size:26px;line-height:1.3;margin:0 0 6px;text-wrap:balance}
+h2{font-size:20px;margin:0 0 12px;display:flex;align-items:baseline;gap:10px;text-wrap:balance}
+h2 .st{font:600 12px var(--f-mono);color:var(--accent);border:1px solid var(--accent);border-radius:3px;padding:1px 6px;letter-spacing:.04em}
+h3{font-size:16px;margin:18px 0 8px}
+h4{font-size:14px;margin:16px 0 6px;color:var(--muted)}
+p{margin:6px 0;max-width:72ch}
+.lede{color:var(--muted);max-width:72ch}
+ul,ol{margin:6px 0;padding-left:22px;max-width:76ch}
+li{margin:3px 0}
+code,.m{font-family:var(--f-mono);font-size:.92em}
+code{background:var(--accent-weak);padding:1px 5px;border-radius:3px}
+.tw{overflow-x:auto;margin:8px 0;border:1px solid var(--line);border-radius:4px}
+table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:500;color:var(--muted);background:var(--bg);font-size:12.5px;letter-spacing:.02em;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.n{color:var(--muted);font-family:var(--f-mono);width:3em}
+tr.hl td{background:var(--hl)}
+.chip{display:inline-block;font:600 11px var(--f-mono);padding:1px 6px;border-radius:10px;margin-left:4px;white-space:nowrap}
+.chip.new{background:var(--accent-weak);color:var(--accent)}
+.chip.warn{background:var(--warn-weak);color:var(--warn)}
+.note{border-left:3px solid var(--accent);background:var(--accent-weak);padding:10px 14px;border-radius:0 4px 4px 0;margin:10px 0;max-width:80ch}
+.note.w{border-color:var(--warn);background:var(--warn-weak)}
+.note.b{border-color:var(--bad);background:var(--warn-weak)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.check{list-style:none;padding:0;display:flex;flex-direction:column;gap:4px;max-width:none}
+.check label{display:flex;gap:10px;align-items:flex-start;cursor:pointer;padding:6px 8px;border-radius:4px}
+.check label:hover{background:var(--bg)}
+.check input{margin-top:5px;width:17px;height:17px;accent-color:var(--accent);flex:none}
+.check input:checked+span{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line)}
+pre{background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:10px 12px;overflow-x:auto;font:13px/1.5 var(--f-mono);margin:8px 0;position:relative}
+.cmd{display:flex;align-items:center;gap:8px;margin:6px 0;flex-wrap:wrap}
+.cmd pre{flex:1;margin:0;min-width:0}
+button{font:500 13px var(--f-body);border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:4px;padding:6px 12px;cursor:pointer}
+button:hover{border-color:var(--accent)}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button.pri{background:var(--accent);border-color:var(--accent);color:var(--panel)}
+.fig{border:1px solid var(--line);border-radius:4px;overflow:auto;background:#fff;margin:10px 0}
+.fig img{display:block;width:100%;min-width:900px;max-width:none}
+.small{font-size:13px;color:var(--muted)}
+/* 계산기 */
+.calc{display:flex;flex-wrap:wrap;gap:12px;align-items:end;margin:10px 0}
+.calc label{display:flex;flex-direction:column;gap:3px;font-size:12.5px;color:var(--muted)}
+.calc input,.calc select{font:15px var(--f-mono);padding:6px 8px;border:1px solid var(--line);border-radius:4px;background:var(--panel);color:var(--ink);width:120px}
+.out{font:600 20px var(--f-mono);color:var(--accent)}
+/* 타이머 */
+.timer{display:grid;grid-template-columns:auto minmax(0,1fr);gap:18px;align-items:center;border:1px solid var(--line);border-radius:6px;padding:16px;margin:10px 0;background:var(--bg)}
+.clock{font:600 44px/1 var(--f-mono);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.next{font-size:15px}
+.next b{color:var(--accent)}
+.tl td.now{background:var(--accent-weak);font-weight:500}
+.tl td.done{color:var(--muted)}
+.tl td.m{white-space:nowrap}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.dia{margin:0;min-width:0}
+.dia svg{width:100%;height:auto;display:block;background:var(--bg);border:1px solid var(--line);border-radius:4px}
+.dia .paste{fill:var(--accent-weak)}
+.dia .wall,.dia .wallo{fill:none;stroke:var(--muted);stroke-width:3}
+.dia .wall{fill:var(--muted)}
+.dia .bolt{fill:var(--muted)}
+.dia .metal{fill:var(--line);stroke:var(--muted);stroke-width:1}
+.dia .elec{fill:var(--accent);stroke:var(--accent)}
+.dia .clip{fill:none;stroke:var(--warn);stroke-width:3;stroke-linejoin:round}
+.dia .wire{stroke:var(--warn);stroke-width:3}
+.dia .lead{stroke:var(--muted);stroke-width:1}
+.dia .dim{stroke:var(--muted);stroke-width:1;stroke-dasharray:4 3}
+.dia .lab{fill:var(--ink);font:13px var(--f-body)}
+.dia .lab.sm,.dia .sm text{font-size:11.5px;fill:var(--muted)}
+.dia .em{fill:var(--ink);font-weight:700}
+figcaption{margin-top:6px}
+@media (max-width:860px){.wrap{grid-template-columns:minmax(0,1fr)}nav.toc{display:none}section{padding:18px 16px}.timer{grid-template-columns:minmax(0,1fr)}.clock{font-size:38px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="top"><div class="in">
+  <div class="brand">2조 W/C 실험<small>실험 보드 Rev 5</small></div>
+  <div class="prog"><span id="progtxt">0 / 0</span><div class="bar"><i id="progbar"></i></div><button id="resetchk" type="button" title="이 기기의 체크 표시를 모두 지움">체크 초기화</button></div>
+</div></div>
+
+<div class="wrap">
+<nav class="toc" aria-label="목차">
+  <a href="#overview">한눈에 보기</a>
+  <a href="#prep">0. 준비·조립</a>
+  <a href="#cell">└ 와셔 용기</a>
+  <a href="#cmds">명령 요약</a>
+  <a href="#s1">1. 보정 저항</a>
+  <a href="#s2">2. 누수 시험</a>
+  <a href="#s3">3. 소금물</a>
+  <a href="#s4">4. 온도계수 α</a>
+  <a href="#s5">5. 본 실험</a>
+  <a href="#timer">└ 배합 타이머</a>
+  <a href="#s6">6. 분석</a>
+  <a href="#trouble">문제 해결</a>
+  <a href="#verify">검증 기록</a>
+</nav>
+
+<main>
+<section id="overview">
+  <h1>2조 W/C 판별 실험 가이드</h1>
+  <p class="lede">시멘트 페이스트의 W/C 차이를 전기적으로 구별할 수 있는지 확인하는 실험 절차야. 위에서부터 순서대로 하면 돼. 체크 표시는 이 기기에만 저장돼.</p>
+  <div class="note b"><b>실제 부품으로는 아직 아무도 안 해 봤어.</b> 회로·코드는 시뮬레이션과 모의 실행으로만 검증했어. 0단계 전원 점검을 꼭 거쳐. 표의 <b>(추정)</b> 값은 계산이지 실측이 아니야.</div>
+  <div class="tw"><table>
+    <thead><tr><th>단계</th><th>할 일</th><th>시간</th></tr></thead>
+    <tbody>
+      <tr><td class="n">0</td><td>부품 확인 → 보드 조립 → 업로드 → 전원 점검</td><td>2~3시간</td></tr>
+      <tr><td class="n">1</td><td>보정 저항으로 측정값 확인</td><td>20분</td></tr>
+      <tr><td class="n">2</td><td>와셔 용기 누수 시험 (물 하루)</td><td>하루</td></tr>
+      <tr><td class="n">3</td><td>소금물 3농도 단조성 확인</td><td>30분</td></tr>
+      <tr><td class="n">4</td><td>온도계수 α 측정</td><td>1시간</td></tr>
+      <tr><td class="n">5</td><td>본 실험: W/C 6수준 × 독립 배합 3회 = 18배합 (하루 6배합 × 3일)</td><td>하루 3~4시간</td></tr>
+      <tr><td class="n">6</td><td><code>analyze.py</code>로 분석 → 보고서</td><td>10분</td></tr>
+    </tbody></table></div>
+  <p><b>측정 방식:</b> 같은 시료를 <b>사인파(집게 E1·E4) → 사각파(집게 Q1·Q4)</b> 순서로 재. 회로는 브레드보드 한 장에 둘 다 꽂혀 있고 집게 두 개만 옮기면 돼. 와셔 A 볼트는 항상 1번(E1/Q1), B는 항상 4번(E4/Q4).</p>
+  <p class="small">파일 위치: GitHub 저장소 <code>2조_전체/실험패키지/</code> — 스케치 <code>02_펌웨어/wc_meter/wc_meter.ino</code>, PC <code>03_PC/logger.py</code>·<code>analyze.py</code>, 순서표 <code>01_회로/꽂는_순서표.md</code></p>
+</section>
+
+<section id="prep">
+  <h2><span class="st">STEP 0</span>준비 · 조립 · 점검</h2>
+  <h3>부품</h3>
+  <div class="tw"><table>
+    <thead><tr><th>부품</th><th>수량</th><th>어디서</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td>Arduino Uno, 브레드보드 830, I2C LCD 16×2, 점퍼선</td><td>1식</td><td>키트</td><td></td></tr>
+      <tr><td>LM358 (DIP-8)</td><td>1</td><td>구매품</td><td></td></tr>
+      <tr><td>저항 10 kΩ ×3, 4.7 kΩ ×2, 1 kΩ ×<b>6</b></td><td></td><td>키트</td><td>1 kΩ: RV2b 1개 + 풀다운 5개 <span class="chip new">Rev 5</span></td></tr>
+      <tr class="hl"><td>저항 330 Ω 1% (331F)</td><td><b>2</b></td><td>구매품</td><td>R1(사인) + RQ(사각). <b>수량 확인 필요.</b> 1개뿐이면 RQ는 100 Ω 3개 직렬(300 Ω)로 대신하고 <code>rq</code>에 실측값 입력</td></tr>
+      <tr class="hl"><td>세라믹 103 (10 nF), 472 (4.7 nF), 104 (0.1 µF)</td><td>각 1</td><td>커패시터 키트</td><td><b>키트에 있는지 확인 필요</b></td></tr>
+      <tr><td>전해 10 µF 50 V</td><td>2</td><td>구매품</td><td>CS, CV. 긴 다리 = +</td></tr>
+      <tr><td>푸시버튼</td><td>1</td><td>키트</td><td>없어도 됨 (PC 명령으로 대신)</td></tr>
+      <tr><td>방수 DS18B20 + 4.7 kΩ</td><td>1</td><td>구매품</td><td></td></tr>
+      <tr><td>악어클립 케이블</td><td>2</td><td>구매품</td><td>와셔 볼트 → 보드</td></tr>
+      <tr><td>멀티미터</td><td>1</td><td></td><td>점검·보정 필수</td></tr>
+    </tbody></table></div>
+
+  <h3>보드 조립</h3>
+  <ul class="check" data-group="prep">
+    <li><label><input type="checkbox" id="c-prep-1"><span>R1·RQ를 꽂기 <b>전에</b> 멀티미터로 재서 값 적어 두기 (예: 329.6 Ω)</span></label></li>
+    <li><label><input type="checkbox" id="c-prep-2"><span>칩 LM358 꽂기 — 반달 홈이 1행 쪽(왼쪽)</span></label></li>
+    <li><label><input type="checkbox" id="c-prep-3"><span>레일 점퍼 1~6번 (위·아래 레일 25/26 이어 주기)</span></label></li>
+    <li><label><input type="checkbox" id="c-prep-4"><span>저항·커패시터·버튼 (아래 ② 표) — 전해 커패시터 방향 확인</span></label></li>
+    <li><label><input type="checkbox" id="c-prep-5"><span>보드 점퍼 7~22번 (번호 순)</span></label></li>
+    <li><label><input type="checkbox" id="c-prep-6"><span>바깥 선: Arduino, LCD, 온도센서, 집게 단자</span></label></li>
+  </ul>
+  <div class="note">기존 4S 보드가 있으면 <b>바뀐 것만</b> 더하면 돼 (표에서 노란 줄):
+    <ul>
+      <li>풀다운 1 kΩ 5개: b11→T-8, c11→T-7, a30→T-24 (LM358 1번 쪽) / g11→B-9, i11→B-7 (7번 쪽)</li>
+      <li>사각파: RQ 330 Ω g30–g34, D9→j30, A2→i30, A3→i34, D8→j38, 집게 단자 Q1 = j34, Q4 = i38</li>
+      <li>버튼: e20·e22·f20·f22, D7→a20, 점퍼 a22→T-17</li>
+    </ul></div>
+  <p class="small">배선 그림 (옆으로 밀어서 보기). 글자가 겹치는 곳은 아래 표가 기준이야.</p>
+  <div class="fig"><img src="breadboard-EXP.png" alt="실험 보드 Rev 5 브레드보드 배선 그림: LM358, 필터, 풀다운, 사각파 저항 RQ, 버튼, 외부 선 위치"></div>
+  <details><summary><b>구멍 번호 표 펼치기</b> (wiring-EXP.json에서 자동 생성)</summary>
+  <h4>① 칩 LM358 (반달 홈이 1행 쪽)</h4><div class="tw"><table><thead><tr><th>핀</th><th>구멍</th><th>역할</th></tr></thead><tbody>
+<tr><td class="n">1</td><td class="m">e10</td><td>A 출력 = 사인파</td></tr>
+<tr><td class="n">2</td><td class="m">e11</td><td>A − 입력 (1번과 연결)</td></tr>
+<tr><td class="n">3</td><td class="m">e12</td><td>A + 입력 (필터 출력)</td></tr>
+<tr><td class="n">4</td><td class="m">e13</td><td>GND</td></tr>
+<tr><td class="n">5</td><td class="m">f13</td><td>B + 입력 (기준 1.8 V)</td></tr>
+<tr><td class="n">6</td><td class="m">f12</td><td>B − 입력 (7번과 연결)</td></tr>
+<tr><td class="n">7</td><td class="m">f11</td><td>B 출력 = 가상 접지</td></tr>
+<tr><td class="n">8</td><td class="m">f10</td><td>5 V</td></tr>
+</tbody></table></div><h4>② 저항·커패시터·버튼</h4><div class="tw"><table><thead><tr><th>부품</th><th>값</th><th>다리 1</th><th>다리 2</th><th></th></tr></thead><tbody>
+<tr><td class="m">RT</td><td>4.7 kΩ</td><td class="m">T+20</td><td class="m">a26</td><td></td></tr>
+<tr><td class="m">RA</td><td>10 kΩ</td><td class="m">b17</td><td class="m">b15</td><td></td></tr>
+<tr><td class="m">RB</td><td>10 kΩ</td><td class="m">d15</td><td class="m">d12</td><td></td></tr>
+<tr><td class="m">C1</td><td>10 nF (103)</td><td class="m">c15</td><td class="m">c10</td><td></td></tr>
+<tr><td class="m">C2</td><td>4.7 nF (472)</td><td class="m">b12</td><td class="m">T-9</td><td></td></tr>
+<tr><td class="m">CS</td><td>10 µF 50 V (+/−)</td><td class="m">c30</td><td class="m">c32</td><td><span class="chip warn">긴 다리 = + = 다리 1</span></td></tr>
+<tr><td class="m">R1</td><td>330 Ω 1%</td><td class="m">a32</td><td class="m">a34</td><td></td></tr>
+<tr><td class="m">RV1</td><td>10 kΩ</td><td class="m">T+32</td><td class="m">a40</td><td></td></tr>
+<tr><td class="m">RV2a</td><td>4.7 kΩ</td><td class="m">b40</td><td class="m">b42</td><td></td></tr>
+<tr><td class="m">RV2b</td><td>1 kΩ</td><td class="m">a42</td><td class="m">T-34</td><td></td></tr>
+<tr><td class="m">CV</td><td>10 µF 50 V (+/−)</td><td class="m">c40</td><td class="m">T-32</td><td><span class="chip warn">긴 다리 = + = 다리 1</span></td></tr>
+<tr><td class="m">CD</td><td>0.1 µF (104)</td><td class="m">j10</td><td class="m">B-8</td><td></td></tr>
+<tr class=hl><td class="m">RPA1</td><td>1 kΩ</td><td class="m">b11</td><td class="m">T-8</td><td> <span class="chip new">Rev 5</span></td></tr>
+<tr class=hl><td class="m">RPA2</td><td>1 kΩ</td><td class="m">c11</td><td class="m">T-7</td><td> <span class="chip new">Rev 5</span></td></tr>
+<tr class=hl><td class="m">RPA3</td><td>1 kΩ</td><td class="m">a30</td><td class="m">T-24</td><td> <span class="chip new">Rev 5</span></td></tr>
+<tr class=hl><td class="m">RPB1</td><td>1 kΩ</td><td class="m">g11</td><td class="m">B-9</td><td> <span class="chip new">Rev 5</span></td></tr>
+<tr class=hl><td class="m">RPB2</td><td>1 kΩ</td><td class="m">i11</td><td class="m">B-7</td><td> <span class="chip new">Rev 5</span></td></tr>
+<tr class=hl><td class="m">RQ</td><td>330 Ω 1%</td><td class="m">g30</td><td class="m">g34</td><td> <span class="chip new">Rev 5</span></td></tr>
+<tr class="hl"><td class="m">SW</td><td>택트 스위치</td><td class="m">e20·e22</td><td class="m">f20·f22</td><td>가운데 홈에 걸침 <span class="chip new">Rev 5</span></td></tr>
+</tbody></table></div><h4>③ 보드 위 점퍼 (그림의 원 안 번호)</h4><div class="tw"><table><thead><tr><th>번호</th><th>넷</th><th>시작</th><th>끝</th></tr></thead><tbody>
+<tr><td class="n">1</td><td>5V</td><td class="m">T+25</td><td class="m">T+26</td></tr>
+<tr><td class="n">2</td><td>GND</td><td class="m">T-25</td><td class="m">T-26</td></tr>
+<tr><td class="n">3</td><td>5V</td><td class="m">B+25</td><td class="m">B+26</td></tr>
+<tr><td class="n">4</td><td>GND</td><td class="m">B-25</td><td class="m">B-26</td></tr>
+<tr><td class="n">5</td><td>5V</td><td class="m">T+50</td><td class="m">B+50</td></tr>
+<tr><td class="n">6</td><td>GND</td><td class="m">T-50</td><td class="m">B-50</td></tr>
+<tr><td class="n">7</td><td>5V</td><td class="m">i10</td><td class="m">B+8</td></tr>
+<tr><td class="n">8</td><td>GND</td><td class="m">a13</td><td class="m">T-10</td></tr>
+<tr><td class="n">9</td><td>DATA</td><td class="m">i46</td><td class="m">i47</td></tr>
+<tr><td class="n">10</td><td>DATA</td><td class="m">h47</td><td class="m">b26</td></tr>
+<tr><td class="n">11</td><td>SDA</td><td class="m">i48</td><td class="m">i49</td></tr>
+<tr><td class="n">12</td><td>SCL</td><td class="m">i50</td><td class="m">i51</td></tr>
+<tr><td class="n">13</td><td>PWM</td><td class="m">i52</td><td class="m">a17</td></tr>
+<tr><td class="n">14</td><td>SINE</td><td class="m">a10</td><td class="m">a11</td></tr>
+<tr><td class="n">15</td><td>SINE</td><td class="m">b10</td><td class="m">b30</td></tr>
+<tr><td class="n">16</td><td>VD</td><td class="m">d32</td><td class="m">i58</td></tr>
+<tr><td class="n">17</td><td>NODE</td><td class="m">b34</td><td class="m">i54</td></tr>
+<tr><td class="n">18</td><td>NODE</td><td class="m">h54</td><td class="m">i55</td></tr>
+<tr><td class="n">19</td><td>VG</td><td class="m">j12</td><td class="m">j11</td></tr>
+<tr><td class="n">20</td><td>VG</td><td class="m">h11</td><td class="m">i56</td></tr>
+<tr><td class="n">21</td><td>VREF</td><td class="m">d40</td><td class="m">i13</td></tr>
+<tr class=hl><td class="n">22</td><td>GND <span class="chip new">Rev 5</span></td><td class="m">a22</td><td class="m">T-17</td></tr>
+</tbody></table></div><h4>④ 바깥 장치로 가는 선</h4><div class="tw"><table><thead><tr><th>장치 쪽</th><th>구멍</th></tr></thead><tbody>
+<tr><td>Arduino 5V</td><td class="m">T+1</td></tr>
+<tr><td>Arduino GND</td><td class="m">T-1</td></tr>
+<tr><td>LCD VCC</td><td class="m">T+3</td></tr>
+<tr><td>LCD GND</td><td class="m">T-3</td></tr>
+<tr><td>Arduino D2</td><td class="m">j46</td></tr>
+<tr><td>Arduino A4</td><td class="m">j48</td></tr>
+<tr><td>LCD SDA</td><td class="m">j49</td></tr>
+<tr><td>Arduino A5</td><td class="m">j50</td></tr>
+<tr><td>LCD SCL</td><td class="m">j51</td></tr>
+<tr><td>Arduino D3</td><td class="m">j52</td></tr>
+<tr><td>사인 집게 E1 (와셔 A)</td><td class="m">j54</td></tr>
+<tr><td>Arduino A0</td><td class="m">j55</td></tr>
+<tr><td>사인 집게 E4 (와셔 B)</td><td class="m">j56</td></tr>
+<tr><td>Arduino A1</td><td class="m">j58</td></tr>
+<tr><td>Arduino D9</td><td class="m">j30</td></tr>
+<tr><td>Arduino A2</td><td class="m">i30</td></tr>
+<tr><td>사각 집게 Q1 (와셔 A)</td><td class="m">j34</td></tr>
+<tr><td>Arduino A3</td><td class="m">i34</td></tr>
+<tr><td>Arduino D8</td><td class="m">j38</td></tr>
+<tr><td>사각 집게 Q4 (와셔 B)</td><td class="m">i38</td></tr>
+<tr><td>Arduino D7</td><td class="m">a20</td></tr>
+</tbody></table></div>
+  </details>
+
+  <h3>펌웨어 올리기</h3>
+  <ul class="check" data-group="fw">
+    <li><label><input type="checkbox" id="c-fw-1"><span>Arduino IDE에서 <code>wc_meter.ino</code> 열기 → 보드 "Arduino Uno" → 업로드 (추가 라이브러리 없음)</span></label></li>
+    <li><label><input type="checkbox" id="c-fw-2"><span>시리얼 모니터 115200 baud, 줄 끝 "새 줄" → <code>h</code> 입력해서 명령 목록 확인</span></label></li>
+    <li><label><input type="checkbox" id="c-fw-3"><span><code>r1 329.6</code>, <code>rq 330.1</code>처럼 실측값 입력 (EEPROM에 저장됨) → <code>info</code>로 확인</span></label></li>
+  </ul>
+  <p class="small">옛 스케치 <code>contact_sine_4S.ino</code>는 쓰지 않아 (MID/AMP 옛 값, RMS 방식).</p>
+
+  <h3>전원 점검</h3>
+  <p>멀티미터 검은 리드 = GND. 집게 E1–E4에 100 Ω 시험 저항을 물린 상태.</p>
+  <div class="tw"><table>
+    <thead><tr><th>측정 위치</th><th>정상 (추정, USB 5 V 기준)</th><th>다르면</th></tr></thead>
+    <tbody>
+      <tr><td>LM358 8번</td><td class="m">4.7 ~ 5.1 V</td><td>칩 방향·5 V 레일</td></tr>
+      <tr><td>LM358 4번</td><td class="m">0 V</td><td></td></tr>
+      <tr><td>LM358 1번 (사인 출력, DC)</td><td class="m">약 2.1 V (5 V의 42%)</td><td>필터·D3 선</td></tr>
+      <tr><td>LM358 5번, 7번</td><td class="m">약 1.8 V (5 V의 36%)</td><td>RV1·RV2a·RV2b 값, CV 방향</td></tr>
+      <tr><td>A1, A0 줄 (DC)</td><td class="m">약 1.8 V</td><td>CS 방향, R1</td></tr>
+      <tr><td>CS 양 끝</td><td class="m">+ 쪽이 약 0.3 V 높음</td><td><b>반대면 CS를 뒤집어 꽂기</b></td></tr>
+    </tbody></table></div>
+  <ul class="check" data-group="pc">
+    <li><label><input type="checkbox" id="c-pc-1"><span>전압 표 통과</span></label></li>
+    <li><label><input type="checkbox" id="c-pc-2"><span><code>s</code> → MEAS 줄의 Z가 시험 저항 실측값 ±2% 안</span></label></li>
+    <li><label><input type="checkbox" id="c-pc-3"><span>집게를 Q1·Q4로 옮겨 <code>q</code> → 같은 확인</span></label></li>
+    <li><label><input type="checkbox" id="c-pc-4"><span>(오실로스코프가 있으면) 1번 핀이 아래가 평평하지 않은 사인파, 약 1.1~3.1 V</span></label></li>
+  </ul>
+
+  <h3>기록기 (PC)</h3>
+  <div class="cmd"><pre>pip install pyserial numpy matplotlib</pre><button type="button" data-copy>복사</button></div>
+  <div class="cmd"><pre>python 03_PC/logger.py</pre><button type="button" data-copy>복사</button></div>
+  <ul>
+    <li>모든 줄이 <code>03_PC/data/</code>에 CSV로 쌓여. <b>logger를 켜면 IDE 시리얼 모니터는 닫기</b> (포트를 같이 못 씀).</li>
+    <li>IDE 시리얼 모니터로 했으면 내용을 복사해 텍스트 파일로 저장한 뒤 <code>python 03_PC/logger.py --from-file 파일.txt</code></li>
+  </ul>
+</section>
+
+<section id="cell">
+  <h2><span class="st">STEP 0</span>와셔 전극 용기 만들기</h2>
+  <p class="lede">페이스트에 직접 닿는 전극 두 개를 용기 마주 보는 벽에 볼트로 고정해. 볼트는 통째로 스테인리스라서, <b>벽 바깥으로 나온 볼트 끝이 안쪽 와셔와 전기적으로 연결</b>돼 있어. 집게는 거기에 물리면 돼.</p>
+
+  <div class="grid2">
+  <figure class="dia">
+    <svg viewBox="0 0 460 270" role="img" aria-labelledby="cs-t">
+      <title id="cs-t">와셔 전극 단면: 용기 안쪽부터 볼트 머리, M4, M8, M12 와셔, 벽, M12, M4, 너트, 볼트 끝에 집게</title>
+      <rect class="paste" x="10" y="30" width="200" height="200"/>
+      <text class="lab" x="20" y="48">용기 안 (페이스트)</text>
+      <text class="lab" x="330" y="50">용기 밖</text>
+      <rect class="wall" x="210" y="20" width="8" height="220"/>
+      <text class="lab sm" x="214" y="258" text-anchor="middle">PET 벽</text>
+      <rect class="bolt" x="166" y="126" width="244" height="8"/>
+      <rect class="metal" x="166" y="116" width="12" height="28"/>
+      <rect class="metal" x="180" y="114" width="6" height="32"/>
+      <rect class="metal" x="188" y="99" width="8" height="62"/>
+      <rect class="elec" x="198" y="80" width="12" height="100"/>
+      <rect class="metal" x="220" y="80" width="12" height="100"/>
+      <rect class="metal" x="234" y="114" width="6" height="32"/>
+      <rect class="metal" x="242" y="110" width="16" height="40"/>
+      <path class="clip" d="M330 118 l40 -18 l40 0 l0 10 l-38 0 l-30 14 M330 142 l40 18 l40 0 l0 -10 l-38 0 l-30 -14"/>
+      <line class="wire" x1="410" y1="130" x2="452" y2="130"/>
+      <g class="lab sm">
+        <text x="150" y="205" text-anchor="end">볼트 머리</text><line class="lead" x1="152" y1="200" x2="172" y2="144"/>
+        <text x="150" y="104" text-anchor="end">M4</text><line class="lead" x1="152" y1="100" x2="183" y2="114"/>
+        <text x="150" y="82" text-anchor="end">M8</text><line class="lead" x1="152" y1="78" x2="192" y2="99"/>
+        <text x="190" y="62" text-anchor="end" class="em">M12 = 전극</text><line class="lead" x1="192" y1="62" x2="204" y2="80"/>
+        <text x="280" y="72">M12</text><line class="lead" x1="278" y1="68" x2="230" y2="82"/>
+        <text x="280" y="98">M4</text><line class="lead" x1="278" y1="94" x2="239" y2="114"/>
+        <text x="280" y="196">너트</text><line class="lead" x1="278" y1="192" x2="252" y2="150"/>
+        <text x="372" y="90" text-anchor="middle" class="em">집게</text>
+        <text x="372" y="190" text-anchor="middle">볼트 끝 약 20 mm에 물림</text>
+      </g>
+      <line class="dim" x1="40" y1="230" x2="40" y2="130"/><text class="lab sm" x="46" y="222">바닥에서 25 mm (구멍 중심)</text>
+    </svg>
+    <figcaption class="small">한쪽 벽 단면 (치수 비율은 실제와 다름). 반대쪽 벽도 똑같이.</figcaption>
+  </figure>
+  <figure class="dia">
+    <svg viewBox="0 0 300 270" role="img" aria-labelledby="tv-t">
+      <title id="tv-t">위에서 본 용기: 마주 보는 두 벽의 폭 중앙에 와셔 A와 B</title>
+      <rect class="paste" x="50" y="40" width="200" height="200"/>
+      <rect class="wallo" x="50" y="40" width="200" height="200"/>
+      <rect class="elec" x="56" y="122" width="8" height="36"/><rect class="metal" x="40" y="132" width="10" height="16"/>
+      <rect class="elec" x="236" y="122" width="8" height="36"/><rect class="metal" x="250" y="132" width="10" height="16"/>
+      <text class="lab em" x="26" y="128" text-anchor="middle">A</text>
+      <text class="lab em" x="274" y="128" text-anchor="middle">B</text>
+      <line class="dim" x1="64" y1="190" x2="236" y2="190"/><text class="lab sm" x="150" y="184" text-anchor="middle">와셔 면 사이 — 실측해서 기록</text>
+      <line class="dim" x1="50" y1="28" x2="250" y2="28"/><text class="lab sm" x="150" y="22" text-anchor="middle">67 mm (바깥)</text>
+      <text class="lab sm" x="150" y="258" text-anchor="middle">폭 중앙 · 충전 높이 50 mm</text>
+      <text class="lab sm" x="150" y="110" text-anchor="middle">A → E1 / Q1</text>
+      <text class="lab sm" x="150" y="128" text-anchor="middle">B → E4 / Q4</text>
+    </svg>
+    <figcaption class="small">위에서 본 모습. A는 항상 1번 단자, B는 항상 4번 단자.</figcaption>
+  </figure>
+  </div>
+
+  <h3>준비물</h3>
+  <p>PET 사각 용기 67×67×100 (예비 1개 더), SUS M4×40 렌치볼트 2, M4 너트 2, 평와셔 M4 ×4, M8 ×2, M12 ×4, 드릴(Ø4.5 또는 Ø4 후 넓히기)이나 달군 송곳, 자, 유성펜, 장갑. 고무 와셔(수도 고무 패킹, 안지름 4~5)는 누수가 있을 때만.</p>
+
+  <h3>만드는 순서</h3>
+  <ul class="check" data-group="cell">
+    <li><label><input type="checkbox" id="c-cell-1"><span>용기 안쪽 바닥에서 <b>50 mm</b>에 충전선을 빙 둘러 그리기</span></label></li>
+    <li><label><input type="checkbox" id="c-cell-2"><span>마주 보는 두 벽의 <b>폭 중앙</b>, 안쪽 바닥에서 <b>25 mm</b>에 구멍 위치 표시 (±2~3 mm는 괜찮음)</span></label></li>
+    <li><label><input type="checkbox" id="c-cell-3"><span>Ø4.5 구멍 뚫기. PET가 갈라지지 않게 작은 구멍에서 넓히거나 달군 송곳으로. 거스러미는 칼로 정리</span></label></li>
+    <li><label><input type="checkbox" id="c-cell-4"><span>안쪽에서 끼우기: <b>볼트 머리 → M4 → M8 → M12</b> 순서로 와셔를 꿰고 구멍에 넣기 (M12가 벽 안쪽 면에 닿게)</span></label></li>
+    <li><label><input type="checkbox" id="c-cell-5"><span>바깥에서: <b>M12 → M4 → 너트</b>. 손으로 꽉 + 렌치로 살짝만 (세게 조이면 PET가 찌그러져 샘)</span></label></li>
+    <li><label><input type="checkbox" id="c-cell-6"><span>반대쪽 벽도 똑같이. 바깥에 <b>A</b>, <b>B</b> 유성펜으로 표시</span></label></li>
+    <li><label><input type="checkbox" id="c-cell-7"><span>자로 <b>두 M12 와셔 면 사이 거리</b>를 재서 기록 (보고서에 셀 치수로 씀)</span></label></li>
+    <li><label><input type="checkbox" id="c-cell-8"><span>멀티미터 저항 모드로 볼트 바깥 끝 ↔ 같은 쪽 안쪽 M12 와셔: 거의 0 Ω이면 연결 정상. 빈 용기에서 A ↔ B는 끊김(OL)이어야 함</span></label></li>
+    <li><label><input type="checkbox" id="c-cell-9"><span>누수 시험(2단계): 물 50 mm, 하루. 새면 벽과 바깥 M12 사이(또는 안쪽 M12와 벽 사이)에 고무 패킹 추가</span></label></li>
+  </ul>
+
+  <h3>집게 연결</h3>
+  <ul>
+    <li><b>바깥으로 나온 볼트 끝(너트 바깥 나사산)</b>에 악어클립을 물려. 너트에 물려도 돼. 둘 다 볼트와 붙어 있어.</li>
+    <li>집게 반대쪽은 보드 단자로: 사인파 측정 땐 A → <b>E1(j54)</b>, B → <b>E4(j56)</b>. 사각파 측정 땐 A → <b>Q1(j34)</b>, B → <b>Q4(i38)</b>.</li>
+    <li>두 집게, 두 볼트 끝이 <b>서로 닿지 않게</b> 해. 바깥 볼트와 벽 바깥면은 <b>항상 마른 상태로</b> 유지해. 젖은 벽을 타고 A와 B 사이에 전류가 새면 값이 틀어져.</li>
+    <li>집게선은 짧게, 테이프로 책상에 고정해. 측정 중에 선이 흔들리면 접촉 저항이 바뀌어.</li>
+    <li>볼트 끝은 측정 전에 한 번씩 닦아 줘 (시멘트 가루·녹이 끼면 접촉이 나빠짐).</li>
+  </ul>
+  <div class="note w">한 번 만든 용기는 <b>실험 끝까지 그 하나만</b> 써. 볼트를 풀었다 조이면 와셔 위치가 조금씩 바뀌어서, 이전 배합과 비교할 수 없게 돼. 세척할 때도 볼트는 풀지 마.</div>
+  <p class="small">기존 도면: <code>최종도면/01_사인파_Rev4/configuration-4S.png</code>, <code>assembly-4S.png</code> (사진풍 그림은 참고용, 치수·순서 글자가 기준)</p>
+</section>
+
+<section id="cmds">
+  <h2><span class="st">REF</span>펌웨어 명령</h2>
+  <div class="tw"><table>
+    <thead><tr><th>명령</th><th>뜻</th></tr></thead>
+    <tbody>
+      <tr><td class="m">l W050-B1-M1</td><td>시료 이름 (<b>측정 전에 항상</b>)</td></tr>
+      <tr><td class="m">w</td><td>물 넣은 순간 (경과 시간 기록 시작)</td></tr>
+      <tr><td class="m">t</td><td>온도 (센서를 페이스트 가운데에 30초 넣은 뒤)</td></tr>
+      <tr><td class="m">s</td><td>사인파 측정 (집게 E1·E4) — 3회 반복 중앙값, 약 2초</td></tr>
+      <tr><td class="m">q</td><td>사각파 측정 (집게 Q1·Q4) — 약 1초</td></tr>
+      <tr><td class="m">ref s / ref q</td><td>지금 시료를 기준으로 저장 (5회 측정)</td></tr>
+      <tr><td class="m">sig 3.2</td><td>LCD 판정에 쓸 σ (분석에서 구한 σ_배합)</td></tr>
+      <tr><td class="m">alpha 0.020</td><td>온도계수 (4단계에서 구한 값)</td></tr>
+      <tr><td class="m">info / reset</td><td>설정 보기 / 초기화</td></tr>
+      <tr><td>버튼</td><td>짧게 = 마지막 모드로 측정, 1.5초 이상 = 기준 저장</td></tr>
+    </tbody></table></div>
+  <h3>이름 규칙 (분석기가 이걸로 묶음)</h3>
+  <div class="tw"><table><thead><tr><th>이름</th><th>뜻</th></tr></thead><tbody>
+    <tr><td class="m">W050-B1-M1</td><td>W/C 0.50, 배합 1번, 측정 회차 1</td></tr>
+    <tr><td class="m">CAL-100.4</td><td>보정 저항 (멀티미터 값을 이름에)</td></tr>
+    <tr><td class="m">SALT-4</td><td>소금물 4 g/L</td></tr>
+    <tr><td class="m">ALPHA-15</td><td>α 측정, 15 °C 단계 (단계마다 이름 바꾸기)</td></tr>
+  </tbody></table></div>
+</section>
+
+<section id="s1">
+  <h2><span class="st">STEP 1</span>보정 저항 <span class="small">20분</span></h2>
+  <ul class="check" data-group="s1">
+    <li><label><input type="checkbox" id="c-s1-1"><span>키트 100 Ω, 1 kΩ을 멀티미터로 재기 (예: 100.4, 996)</span></label></li>
+    <li><label><input type="checkbox" id="c-s1-2"><span>집게 E1·E4에 100 Ω → <code>l CAL-100.4</code> → <code>t</code> → <code>s</code> → 집게를 Q1·Q4로 → <code>q</code></span></label></li>
+    <li><label><input type="checkbox" id="c-s1-3"><span>1 kΩ도 같은 방법</span></label></li>
+    <li><label><input type="checkbox" id="c-s1-4"><span>합격: 둘 다 ±2% 안 (넘으면 <code>r1</code>/<code>rq</code> 입력, 집게 물림 확인)</span></label></li>
+  </ul>
+</section>
+
+<section id="s2">
+  <h2><span class="st">STEP 2</span>와셔 용기 누수 시험 <span class="small">하루</span></h2>
+  <ul class="check" data-group="s2">
+    <li><label><input type="checkbox" id="c-s2-1"><span>와셔 용기(<a href="#cell">만드는 법</a>)에 물을 50 mm 선까지 채우고 하루 두기</span></label></li>
+    <li><label><input type="checkbox" id="c-s2-2"><span>새면 수도 고무 패킹(안지름 4~5)을 와셔 사이에 넣기</span></label></li>
+  </ul>
+  <div class="note w"><b>이 용기 하나만 끝까지 써.</b> 전극 간격이 바뀌면 값이 달라져.</div>
+</section>
+
+<section id="s3">
+  <h2><span class="st">STEP 3</span>소금물 단조성 <span class="small">30분</span></h2>
+  <ul class="check" data-group="s3">
+    <li><label><input type="checkbox" id="c-s3-1"><span>정제수 300 ml에 소금 0.6 g / 1.2 g / 2.4 g (= 2, 4, 8 g/L) 세 병</span></label></li>
+    <li><label><input type="checkbox" id="c-s3-2"><span>각각 50 mm까지 → <code>l SALT-2</code> → <code>t</code> → <code>s</code> → 집게 옮겨 <code>q</code> → 헹구고 다음 농도</span></label></li>
+    <li><label><input type="checkbox" id="c-s3-3"><span>합격: 농도↑ → Z↓ (보고서 3절에서 자동 확인)</span></label></li>
+  </ul>
+</section>
+
+<section id="s4">
+  <h2><span class="st">STEP 4</span>온도계수 α <span class="small">1시간</span></h2>
+  <p><b>페이스트 대신 4 g/L 소금물</b>로 해. 페이스트는 재는 동안 수화로 값이 변해서 온도 효과와 섞여. 페이스트의 α는 다를 수 있다는 점을 보고서에 적어 (추정).</p>
+  <ul class="check" data-group="s4">
+    <li><label><input type="checkbox" id="c-s4-1"><span>소금물을 냉장고에서 약 10 °C로 식혀 용기에 50 mm까지</span></label></li>
+    <li><label><input type="checkbox" id="c-s4-2"><span>미지근한 물(약 35 °C)을 담은 큰 그릇에 용기를 담가 천천히 데우기</span></label></li>
+    <li><label><input type="checkbox" id="c-s4-3"><span>약 3 °C 오를 때마다: <code>l ALPHA-12</code> → 저어 섞기 → <code>t</code> → 센서 빼기 → <code>s</code> → 집게 옮겨 <code>q</code> → 센서 넣고 <code>t</code></span></label></li>
+    <li><label><input type="checkbox" id="c-s4-4"><span>12 → 27 °C, 6단계 이상</span></label></li>
+    <li><label><input type="checkbox" id="c-s4-5"><span>보고서 1절의 α를 <code>alpha 0.0xx</code>로 입력</span></label></li>
+  </ul>
+</section>
+
+<section id="s5">
+  <h2><span class="st">STEP 5</span>본 실험</h2>
+  <div class="note w"><b>안전:</b> 니트릴 장갑, 보안경, 가루 계량할 때 마스크. 시멘트는 강알칼리야. 피부에 묻으면 바로 물로 씻어. <b>싱크대에 버리지 마.</b></div>
+
+  <h3>배합 계산기 (시멘트 고정, 물만 바꿈)</h3>
+  <div class="calc">
+    <label for="cem">시멘트 [g]<input id="cem" type="number" value="400" min="100" step="10"></label>
+    <label for="wc">W/C<select id="wc"><option>0.40</option><option selected>0.50</option><option>0.53</option><option>0.56</option><option>0.59</option><option>0.60</option></select></label>
+    <div><div class="small">물</div><div class="out" id="wout">200 g</div></div>
+    <div><div class="small">페이스트 부피 (추정, 비중 3.15)</div><div class="out" id="vout">327 ml</div></div>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>W/C</th><th>시멘트 [g]</th><th>물 [g]</th><th>부피 [ml] (추정)</th></tr></thead>
+    <tbody>
+      <tr><td class="m">0.40</td><td>400</td><td>160</td><td>287</td></tr>
+      <tr class="hl"><td class="m">0.50 기준</td><td>400</td><td>200</td><td>327</td></tr>
+      <tr><td class="m">0.53</td><td>400</td><td>212</td><td>339</td></tr>
+      <tr><td class="m">0.56</td><td>400</td><td>224</td><td>351</td></tr>
+      <tr><td class="m">0.59</td><td>400</td><td>236</td><td>363</td></tr>
+      <tr><td class="m">0.60</td><td>400</td><td>240</td><td>367</td></tr>
+    </tbody></table></div>
+  <ul class="small">
+    <li>용기 50 mm 선까지 약 210 ml 필요 (추정, 안쪽 약 65×65 mm) → 모든 배합이 넉넉해.</li>
+    <li>저울 1 g 단위 → 물 오차 ±0.5 g ≈ W/C ±0.001. 판정선 간격(약 0.016)보다 충분히 작아.</li>
+    <li>판정선: 단위수량 +20 kg/m³ ≈ W/C 0.50 → 0.516 (페이스트 기준, 추정).</li>
+    <li>시멘트: 18배합 × 400 g = 7.2 kg + 연습 → <b>10 kg 한 포대 (같은 로트)</b>.</li>
+  </ul>
+
+  <h3>배합 순서 (블록 무작위 — 바꾸지 말 것)</h3>
+  <p class="small">하루에 각 수준을 한 번씩, 순서는 섞었어. 날짜·실내 온도 효과가 W/C 효과와 섞이지 않게 하려는 거야. 첫날은 W/C 0.50 연습 배합(<code>PRACTICE</code>) 1회 먼저.</p>
+  <ul class="check" data-group="order">
+    <li><label><input type="checkbox" id="c-o-1"><span><b>1일차</b> <span class="m">W050-B1 → W056-B1 → W060-B1 → W040-B1 → W059-B1 → W053-B1</span></span></label></li>
+    <li><label><input type="checkbox" id="c-o-2"><span><b>2일차</b> <span class="m">W040-B2 → W053-B2 → W056-B2 → W050-B2 → W059-B2 → W060-B2</span></span></label></li>
+    <li><label><input type="checkbox" id="c-o-3"><span><b>3일차</b> <span class="m">W050-B3 → W056-B3 → W059-B3 → W060-B3 → W053-B3 → W040-B3</span></span></label></li>
+  </ul>
+
+  <h3>전날 준비</h3>
+  <ul class="check" data-group="eve">
+    <li><label><input type="checkbox" id="c-e-1"><span>시멘트·정제수·용기·도구를 실험실에 하룻밤 (재료를 실온으로, ΔT ≤ 1 °C 목표)</span></label></li>
+    <li><label><input type="checkbox" id="c-e-2"><span>폐기용 양동이·비닐봉지, 물티슈, 장갑·보안경·마스크</span></label></li>
+    <li><label><input type="checkbox" id="c-e-3"><span><code>info</code>로 r1·rq·alpha 확인, logger 켜기</span></label></li>
+  </ul>
+
+  <h3 id="timer">배합 타이머</h3>
+  <p class="small">물에 시멘트를 넣기 시작하는 순간 <b>시작</b>을 누르고, 동시에 Arduino에 <code>w</code>를 쳐. 화면이 꺼지지 않게 요청해 볼게 (기기에 따라 안 될 수 있음).</p>
+  <div class="timer">
+    <div class="clock" id="clock" aria-live="off">00:00</div>
+    <div>
+      <div class="next" id="next" aria-live="polite">시작을 누르면 다음 할 일이 여기 나와.</div>
+      <div class="btns"><button class="pri" id="tstart" type="button">시작 (물 넣는 순간)</button><button id="treset" type="button">초기화</button></div>
+    </div>
+  </div>
+  <div class="tw"><table class="tl" id="tl">
+    <thead><tr><th>시각</th><th>할 일</th><th>명령</th></tr></thead>
+    <tbody>
+      <tr data-t="-300"><td class="m">−5:00</td><td>물 계량 (예: 200 g), 시멘트 400 g 따로 계량</td><td></td></tr>
+      <tr data-t="0"><td class="m">0:00</td><td>물에 시멘트를 30초 동안 넣기 시작 + <b>동시에</b> 명령</td><td class="m">w</td></tr>
+      <tr data-t="30"><td class="m">0:30</td><td>스패츌러로 3분 섞기. 바닥·벽을 긁어 덩어리 없게</td><td></td></tr>
+      <tr data-t="210"><td class="m">3:30</td><td>와셔 용기에 50 mm 선까지 붓기, 바닥을 10번 톡톡 쳐서 기포 빼기</td><td></td></tr>
+      <tr data-t="300"><td class="m">5:00</td><td>1회차 이름 입력</td><td class="m">l W050-B1-M1</td></tr>
+      <tr data-t="600"><td class="m">10:00</td><td><b>1회차:</b> 10초 재혼합(와셔 건드리지 않게) → 선 맞추기 → 센서 30초 → <code>t</code> → 센서 빼기 → 집게 E1·E4 <code>s</code> → 집게 Q1·Q4 <code>q</code> → 센서 30초 <code>t</code></td><td class="m">t · s · q · t</td></tr>
+      <tr data-t="870"><td class="m">14:30</td><td>2회차 이름 입력</td><td class="m">l W050-B1-M2</td></tr>
+      <tr data-t="900"><td class="m">15:00</td><td><b>2회차:</b> 1회차와 똑같이</td><td class="m">t · s · q · t</td></tr>
+      <tr data-t="1020"><td class="m">17:00</td><td>정리: 페이스트를 봉지에 긁어 담기 → 용기·와셔를 물티슈로 닦고 <b>양동이 물</b>에 헹구기 → 물기 제거</td><td></td></tr>
+    </tbody></table></div>
+  <ul class="small">
+    <li><code>WARN</code>이 뜨면 문제 해결 표를 보고 그 회차를 다시 재 (이름은 그대로).</li>
+    <li>LCD의 OK/ABN은 <b>보조 표시</b>야. 공식 판정은 6단계 분석으로 해.</li>
+  </ul>
+
+  <h3>폐기</h3>
+  <ul>
+    <li>남은 페이스트는 봉지째 굳혀서 일반 쓰레기로.</li>
+    <li>헹군 물은 양동이에 모아 하루 가라앉히고, 윗물만 버린 뒤 바닥 찌꺼기는 굳혀서 버려.</li>
+  </ul>
+</section>
+
+<section id="s6">
+  <h2><span class="st">STEP 6</span>분석</h2>
+  <div class="cmd"><pre>python 03_PC/analyze.py</pre><button type="button" data-copy>복사</button></div>
+  <p><code>03_PC/result/report.md</code>와 그림 <code>fig_wc.png</code>, <code>fig_alpha.png</code>가 생겨. 보고서에서 볼 것:</p>
+  <ol>
+    <li><b>σ 세 가지를 구분해:</b> 기기 반복성(같은 측정 안), 시료 반복성(재혼합 회차 간), <b>σ_배합(독립 배합 간 — 판정에 쓰는 σ)</b></li>
+    <li>기준 0.50 대비 Δ, d = Δ/σ_배합, <b>|Δ| ≥ 3σ_배합이면 "구별됨"</b></li>
+    <li>ANOVA p값, 단조성</li>
+    <li><b>검출 가능한 최소 W/C 변화 = 3σ_배합 / 감도</b> → 판정선 0.016과 비교. 이게 프로젝트 질문의 답이야</li>
+    <li>사인 대 사각: |감도|/σ_배합이 큰 쪽. 20% 안으로 비슷하면 규칙대로 간단한 사각파</li>
+  </ol>
+  <div class="note">결과가 "구별 못 함"이어도 <b>근거 있는 결과</b>야. 그대로 보고하고, 무엇이 σ를 키웠는지(온도, 수화 드리프트, 배합 손 오차)를 보고서 숫자로 설명해.</div>
+  <p class="small">분석에서 나온 σ_배합을 <code>sig 3.2</code>처럼 넣으면 LCD 판정도 같은 기준으로 표시돼 (시연용).</p>
+</section>
+
+<section id="trouble">
+  <h2><span class="st">FIX</span>문제 해결</h2>
+  <div class="tw"><table>
+    <thead><tr><th>증상 / WARN</th><th>원인과 조치</th></tr></thead>
+    <tbody>
+      <tr><td>사인파 없음</td><td>LM358 방향(반달 홈 = 1행 쪽), D3 선, 8번 5 V, C1·C2 값</td></tr>
+      <tr><td>전극 열림: 사인 단자 E1·E4</td><td>집게가 Q 단자에 있거나 빠짐, 페이스트가 와셔에 안 닿음(충전 높이)</td></tr>
+      <tr><td>전극 열림: 사각 단자 Q1·Q4</td><td>집게가 E 단자에 있거나 빠짐</td></tr>
+      <tr><td>전극 합선</td><td>두 집게가 서로 닿음, E1/Q1 줄 점퍼 확인</td></tr>
+      <tr><td>사각파 없음</td><td>D9→j30, D8→j38, A2→i30 선</td></tr>
+      <tr><td>온도센서 응답 없음</td><td>D2 선, 4.7 kΩ 풀업(RT), 빨강 = 5 V / 검정 = GND / 노랑 = D2</td></tr>
+      <tr><td>온도 측정이 5분 넘게 지났음</td><td><code>t</code>를 다시</td></tr>
+      <tr><td>LCD가 안 켜짐</td><td>측정은 정상 (LCD 없어도 동작). 백팩 뒷면 가변저항으로 대비 조절, <code>info</code>에 주소가 나오는지</td></tr>
+      <tr><td>같은 시료인데 값이 한 방향으로 계속 변함</td><td>수화 진행 (정상). 그래서 10분·15분 고정 시각에 재</td></tr>
+      <tr><td>logger가 포트를 못 엶</td><td>IDE 시리얼 모니터 닫기</td></tr>
+    </tbody></table></div>
+</section>
+
+<section id="verify">
+  <h2><span class="st">LOG</span>검증 기록 <span class="small">실물 시험 전, 2026-11-26</span></h2>
+  <div class="tw"><table>
+    <thead><tr><th>대상</th><th>방법</th><th>결과</th></tr></thead>
+    <tbody>
+      <tr><td>배선 연결</td><td>union-find 검사</td><td>끊김·합선·구멍 중복·자기 합선 0</td></tr>
+      <tr><td>검증기 자체</td><td>일부러 틀린 배선 6종</td><td>6종 모두 잡아냄</td></tr>
+      <tr><td>배선 = 회로</td><td>배선표 → ngspice, LM358 교차 왜곡 모델</td><td>Z 200.04 / 206.04 Ω (참값 200 / 206), 사인 1.10~3.12 V, 가상 접지 1.815 V, CS 극성 정상, 사각 200.3 / 206.3 Ω</td></tr>
+      <tr><td>펌웨어 컴파일</td><td>avr-gcc (Uno)</td><td>경고 0, 플래시 73%, RAM 48%</td></tr>
+      <tr><td>실제 바이너리</td><td>simavr 사이클 에뮬 + 회로 모델 + DS18B20 흉내</td><td>온도·CRC 정상, 사각 반주기 안에 ADC 끝(361/500 µs), 3% 차이 구별</td></tr>
+      <tr><td>펌웨어 로직</td><td>PC 모의 실행</td><td>집게·센서 경고, 50~3000 Ω, 60 Hz 50 mV에도 사인 +0.1%, 온도 보정, 기준·3σ, 버튼, LCD 글자, 설정 유지</td></tr>
+      <tr><td>기록·분석</td><td>가상 실험 18배합 + 보정 + 소금물 + α</td><td>α 0.0201 (넣은 값 0.020), 소금물 단조, 보정 오차 &lt; 0.6%</td></tr>
+    </tbody></table></div>
+  <p class="small"><b>검증 못 한 것:</b> 실제 LM358·ADC 잡음·전원 잡음, 실제 페이스트의 전기 모델(R + 이중층은 추정), 와셔 셀상수, 실제 LCD 백팩 핀 배치.</p>
+  <div class="note"><b>학업 윤리:</b> 이 회로·코드·절차는 AI(Claude) 도움을 받아 만들었어. 수업의 AI 사용 허용 범위와 제출물에 AI 도움을 밝혀야 하는지 교수님 안내를 확인해.</div>
+</section>
+</main>
+</div>
+
+<script>
+(function(){
+  // 체크리스트: 이 기기에만 저장
+  var KEY='wc-guide-checks-v1', st={};
+  try{ st=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){ st={}; }
+  var boxes=[].slice.call(document.querySelectorAll('.check input[type=checkbox]'));
+  function save(){ try{ localStorage.setItem(KEY,JSON.stringify(st)); }catch(e){} }
+  function prog(){
+    var n=boxes.filter(function(b){return b.checked}).length;
+    document.getElementById('progtxt').textContent=n+' / '+boxes.length;
+    document.getElementById('progbar').style.width=(boxes.length?100*n/boxes.length:0)+'%';
+  }
+  boxes.forEach(function(b){ b.checked=!!st[b.id]; b.addEventListener('change',function(){ st[b.id]=b.checked; save(); prog(); }); });
+  document.getElementById('resetchk').addEventListener('click',function(){ st={}; save(); boxes.forEach(function(b){b.checked=false}); prog(); });
+  prog();
+
+  // 복사 버튼
+  [].forEach.call(document.querySelectorAll('[data-copy]'),function(btn){
+    btn.addEventListener('click',function(){
+      var pre=btn.parentNode.querySelector('pre'), txt=pre.textContent;
+      function sel(){ var r=document.createRange(); r.selectNodeContents(pre); var s=getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent='선택됨'; }
+      try{ navigator.clipboard.writeText(txt).then(function(){ btn.textContent='복사됨'; setTimeout(function(){btn.textContent='복사'},1500); },sel); }catch(e){ sel(); }
+    });
+  });
+
+  // 배합 계산기
+  var cem=document.getElementById('cem'), wc=document.getElementById('wc');
+  function calc(){ var c=parseFloat(cem.value)||0, r=parseFloat(wc.value)||0, w=c*r;
+    document.getElementById('wout').textContent=Math.round(w)+' g';
+    document.getElementById('vout').textContent=Math.round(c/3.15+w)+' ml'; }
+  cem.addEventListener('input',calc); wc.addEventListener('change',calc); calc();
+
+  // 배합 타이머 (시작 시각은 이 기기에 저장 → 새로고침해도 이어짐)
+  var TK='wc-guide-timer-v1', t0=null, lock=null, iv=null;
+  try{ var s=localStorage.getItem(TK); if(s) t0=parseInt(s,10); }catch(e){}
+  var rows=[].slice.call(document.querySelectorAll('#tl tbody tr'));
+  function fmt(sec){ var neg=sec<0; sec=Math.abs(Math.floor(sec)); var m=Math.floor(sec/60), s=sec%60; return (neg?'−':'')+(m<10?'0':'')+m+':'+(s<10?'0':'')+s; }
+  function tick(){
+    var clock=document.getElementById('clock'), next=document.getElementById('next');
+    if(t0===null){ clock.textContent='00:00'; next.textContent='시작을 누르면 다음 할 일이 여기 나와.'; rows.forEach(function(r){[].forEach.call(r.cells,function(c){c.className=c.className.replace(/\b(now|done)\b/g,'').trim()})}); return; }
+    var el=(Date.now()-t0)/1000; clock.textContent=fmt(el);
+    var cur=-1; rows.forEach(function(r,i){ if(parseFloat(r.dataset.t)<=el) cur=i; });
+    rows.forEach(function(r,i){ [].forEach.call(r.cells,function(c){ c.classList.remove('now','done'); if(i===cur) c.classList.add('now'); else if(i<cur) c.classList.add('done'); }); });
+    var nx=rows[cur+1];
+    if(nx){ var dt=parseFloat(nx.dataset.t)-el; next.innerHTML='다음: <b>'+nx.cells[0].textContent+'</b> ('+fmt(dt)+' 남음) — '+nx.cells[1].textContent; }
+    else next.textContent='모든 단계가 끝났어. 정리하고 다음 배합으로.';
+  }
+  function wake(){ try{ if(navigator.wakeLock) navigator.wakeLock.request('screen').then(function(l){lock=l}).catch(function(){}); }catch(e){} }
+  document.getElementById('tstart').addEventListener('click',function(){ t0=Date.now(); try{localStorage.setItem(TK,String(t0))}catch(e){} wake(); tick(); });
+  document.getElementById('treset').addEventListener('click',function(){ t0=null; try{localStorage.removeItem(TK)}catch(e){} if(lock){try{lock.release()}catch(e){} lock=null;} tick(); });
+  document.addEventListener('visibilitychange',function(){ if(!document.hidden && t0!==null) wake(); });
+  tick(); iv=setInterval(tick,500);
+})();
+</script>
